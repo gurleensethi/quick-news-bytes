@@ -1,7 +1,9 @@
-package app.com.thetechnocafe.quicknewsbytes;
+package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import app.com.thetechnocafe.quicknewsbytes.R;
 
 public class HomeActivity extends AppCompatActivity {
 
