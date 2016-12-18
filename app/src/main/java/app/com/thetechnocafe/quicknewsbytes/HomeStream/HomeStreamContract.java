@@ -5,4 +5,11 @@ package app.com.thetechnocafe.quicknewsbytes.HomeStream;
  */
 
 public class HomeStreamContract {
+    public interface Presenter {
+        void start();
+    }
+
+    public interface View {
+
+    }
 }

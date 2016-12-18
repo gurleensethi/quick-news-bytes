@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QuickNewsBytes</string>
+    <string name="news_feed">News Feed</string>
 </resources>
