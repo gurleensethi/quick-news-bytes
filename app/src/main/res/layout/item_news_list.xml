@@ -66,6 +66,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/article_image_view"
                 android:layout_width="0dp"
                 android:layout_height="92dp"
                 android:layout_weight="3"

@@ -1,7 +1,6 @@
 package app.com.thetechnocafe.quicknewsbytes.Networking;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -12,6 +11,9 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
@@ -24,7 +26,7 @@ public class NetworkRequests {
 
     //Interfaces for Callbacks
     public interface SourceNewsListener {
-        void onNewsFetched(boolean isSuccessful);
+        void onNewsFetched(boolean isSuccessful, List<ArticleModel> models);
 
         Context getContext();
     }
@@ -47,26 +49,28 @@ public class NetworkRequests {
                         //Get the articles array
                         JSONArray articlesArray = response.getJSONArray(Constants.ARTICLES);
 
+                        List<ArticleModel> models = new ArrayList<>();
+
                         //Iterate and convert using GSON
                         for (int count = 0; count < articlesArray.length(); count++) {
                             Gson gson = new Gson();
                             ArticleModel model = gson.fromJson(articlesArray.getJSONObject(count).toString(), ArticleModel.class);
-                            Toast.makeText(listener.getContext(), model.getTitle(), Toast.LENGTH_SHORT).show();
+                            models.add(model);
                         }
 
-                        listener.onNewsFetched(true);
+                        listener.onNewsFetched(true, models);
                     } else {
-                        listener.onNewsFetched(false);
+                        listener.onNewsFetched(false, null);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    listener.onNewsFetched(false);
+                    listener.onNewsFetched(false, null);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                listener.onNewsFetched(false);
+                listener.onNewsFetched(false, null);
             }
         });
 
