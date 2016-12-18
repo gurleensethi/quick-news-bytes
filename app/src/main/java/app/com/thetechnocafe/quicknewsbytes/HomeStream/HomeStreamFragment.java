@@ -7,13 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import app.com.thetechnocafe.quicknewsbytes.Networking.NetworkRequests;
 import app.com.thetechnocafe.quicknewsbytes.R;
 
 /**
  * Created by gurleensethi on 18/12/16.
  */
 
-public class HomeStreamFragment extends Fragment implements HomeStreamContract.View {
+public class HomeStreamFragment extends Fragment implements HomeStreamContract.View, NetworkRequests.SourceNewsListener {
 
     private HomeStreamContract.Presenter mPresenter;
 
@@ -34,6 +35,13 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
 
         mPresenter = new HomeStreamPresenter(this);
 
+        new NetworkRequests().fetchNewsFromSource(this, "techcrunch");
+
         return view;
+    }
+
+    @Override
+    public void onNewsFetched(boolean isSuccessful) {
+
     }
 }
