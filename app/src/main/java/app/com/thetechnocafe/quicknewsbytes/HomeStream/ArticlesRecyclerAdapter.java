@@ -12,7 +12,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import app.com.thetechnocafe.quicknewsbytes.Database.DataManager;
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
+import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +63,14 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
             Glide.with(mContext)
                     .load(mList.get(position).getUrlToImage())
                     .into(mArticleImageView);
+
+            //Find corresponding source model
+            SourceModel source = DataManager.getInstance(mContext).getSourceFromId(mList.get(position).getSourceId());
+            if (source != null) {
+                Glide.with(mContext)
+                        .load(source.getUrlsToLogos().getMediumImageUrl())
+                        .into(mSourceImageView);
+            }
         }
     }
 

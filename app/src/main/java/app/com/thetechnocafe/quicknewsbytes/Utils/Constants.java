@@ -12,4 +12,6 @@ public class Constants {
     public static final String STATUS_OK = "ok";
     public static final String ARTICLES = "articles";
     public static final String SOURCES = "sources";
+
+    public static final String REALM_SOURCE_ID = "mID";
 }

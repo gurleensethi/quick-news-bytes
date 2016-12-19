@@ -11,6 +11,7 @@ import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
+import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -118,6 +119,19 @@ public class RealmDatabase {
         }
 
         return true;
+    }
+
+    /**
+     * Get Source Model from id
+     */
+    public SourceModel getSourceModel(String sourceId) {
+        SourceModel source;
+
+        mRealm.beginTransaction();
+        source = mRealm.where(SourceModel.class).equalTo(Constants.REALM_SOURCE_ID, sourceId).findFirst();
+        mRealm.commitTransaction();
+
+        return source;
     }
 }
 

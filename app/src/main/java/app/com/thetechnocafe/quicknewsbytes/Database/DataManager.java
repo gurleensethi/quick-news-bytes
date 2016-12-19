@@ -68,4 +68,9 @@ public class DataManager {
     public boolean insertNewSource(SourceModel model) {
         return RealmDatabase.getInstance(mContext).saveNewSource(model);
     }
+
+    //Get source model from id
+    public SourceModel getSourceFromId(String sourceId) {
+        return RealmDatabase.getInstance(mContext).getSourceModel(sourceId);
+    }
 }
