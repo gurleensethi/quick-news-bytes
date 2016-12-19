@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
+import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -98,4 +99,25 @@ public class RealmDatabase {
 
         return mArticlesList;
     }
+
+    /**
+     * Store new Source model
+     * Check for exception if already exists
+     */
+    public boolean saveNewSource(final SourceModel model) {
+        try {
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.insert(model);
+                }
+            });
+        } catch (RealmPrimaryKeyConstraintException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 }
+

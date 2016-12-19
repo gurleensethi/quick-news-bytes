@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
+import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.Networking.NetworkRequests;
 
 /**
@@ -38,11 +39,14 @@ public class DataManager {
 
     //Send request to fetch latest news
     public void fetchLatestNewsBySource(final NewsFetchListener listener) {
+        //TODO: Remove this from production code
+        new NetworkRequests().fetchSources(mContext, null);
+
         //Initially send news that is stored in Realm
         listener.onOfflineNewsFetched(RealmDatabase.getInstance(mContext).getSavedArticles());
 
         //Fetch latest news from network
-        new NetworkRequests().fetchNewsFromSource(mContext, new NetworkRequests.SourceNewsListener() {
+        new NetworkRequests().fetchNewsFromSource(new NetworkRequests.SourceNewsListener() {
             @Override
             public void onNewsFetched(boolean isSuccessful) {
                 listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(mContext).getSavedArticles());
@@ -58,5 +62,10 @@ public class DataManager {
     //Insert new Article in Realm
     public boolean insertNewArticle(ArticleModel model) {
         return RealmDatabase.getInstance(mContext).saveNewArticle(model);
+    }
+
+    //Insert new Source in Realm
+    public boolean insertNewSource(SourceModel model) {
+        return RealmDatabase.getInstance(mContext).saveNewSource(model);
     }
 }

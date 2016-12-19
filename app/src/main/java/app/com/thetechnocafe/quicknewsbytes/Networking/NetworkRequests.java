@@ -17,6 +17,7 @@ import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Database.DataManager;
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
+import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
 
 /**
@@ -32,11 +33,15 @@ public class NetworkRequests {
         Context getContext();
     }
 
+    public interface SourcesFetcherListener {
+        void onSourcesFetched(boolean isSuccessful);
+    }
+
     /**
      * Fetch news for a single source,
      * Store directly to Realm Database
      */
-    public void fetchNewsFromSource(final Context context, final SourceNewsListener listener, final String sourceId) {
+    public void fetchNewsFromSource(final SourceNewsListener listener, final String sourceId) {
         String completeURL = Constants.BASE_ARTICLES_URL + sourceId + Constants.NEWS_API_KEY;
 
         //Create JSON Request
@@ -63,7 +68,7 @@ public class NetworkRequests {
                             model.setSourceId(sourceId);
 
                             //Insert to database
-                            DataManager.getInstance(context).insertNewArticle(model);
+                            DataManager.getInstance(listener.getContext()).insertNewArticle(model);
                         }
 
                         listener.onNewsFetched(true);
@@ -84,5 +89,46 @@ public class NetworkRequests {
 
         //Add to request queue
         VolleyRequestQueue.getInstance(listener.getContext()).getRequestQueue().add(request);
+    }
+
+    /**
+     * Fetch and store sources from NEWSAPI
+     * store to realm database
+     */
+    public void fetchSources(final Context context, final SourcesFetcherListener listener) {
+        String completeURL = Constants.BASE_SOURCE_URL;
+
+        //Create JSON request
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, completeURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //Check for status
+                try {
+                    if (response.getString("status").equals(Constants.STATUS_OK)) {
+
+                        //Get the sources array
+                        JSONArray array = response.getJSONArray(Constants.SOURCES);
+
+                        //Iterate and store in realm database
+                        for (int count = 0; count < array.length(); count++) {
+                            //Get model from GSON and store to realm
+                            Gson gson = new Gson();
+                            SourceModel source = gson.fromJson(array.getJSONObject(count).toString(), SourceModel.class);
+                            DataManager.getInstance(context).insertNewSource(source);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        //Add to volley queue
+        VolleyRequestQueue.getInstance(context).getRequestQueue().add(request);
     }
 }
