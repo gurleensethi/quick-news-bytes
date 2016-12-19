@@ -61,7 +61,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
             mTitleTextView.setText(mList.get(position).getTitle());
             mDescriptionTextView.setText(mList.get(position).getDescription());
             mAuthorNameTextView.setText(mList.get(position).getAuthorName());
-            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mList.get(position).getPublishedAt()));
+            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mContext, mList.get(position).getPublishedAt()));
 
             //Load the images with Glide
             Glide.with(mContext)

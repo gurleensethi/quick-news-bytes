@@ -1,8 +1,12 @@
 package app.com.thetechnocafe.quicknewsbytes.Utils;
 
+import android.content.Context;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import app.com.thetechnocafe.quicknewsbytes.R;
 
 /**
  * Created by gurleensethi on 19/12/16.
@@ -42,7 +46,7 @@ public class DateFormattingUtils {
     /**
      * Convert date to time ago
      */
-    public String convertToTimeElapsedString(String stringDate) {
+    public String convertToTimeElapsedString(Context context, String stringDate) {
         //Get date from string
         Date date = convertToDate(stringDate);
 
@@ -54,17 +58,18 @@ public class DateFormattingUtils {
         if (isLargerThanADay) {
             int numOfDays = (int) (timeDifference / Constants.MILLIS_IN_A_DAY);
 
-            return numOfDays + " " + Constants.DAYS_AGO;
+            return context.getResources().getQuantityString(R.plurals.daysAgo, numOfDays, numOfDays);
         } else {
             boolean isLargerThanAnHour = timeDifference >= Constants.MILLIS_IN_AN_HOUR;
 
             if (isLargerThanAnHour) {
                 int numOfHours = (int) (timeDifference / Constants.MILLIS_IN_AN_HOUR);
 
-                return numOfHours + " " + Constants.HOURS_AGO;
+                return context.getResources().getQuantityString(R.plurals.hoursAgo, numOfHours, numOfHours);
             } else {
                 int numOfMinutes = (int) (timeDifference / Constants.MILLIS_IN_A_SECOND);
-                return numOfMinutes + " " + Constants.MINUTES_AGO;
+
+                return context.getResources().getQuantityString(R.plurals.minutesAgo, numOfMinutes, numOfMinutes);
             }
         }
     }
