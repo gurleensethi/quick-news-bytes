@@ -76,4 +76,9 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
     public int getItemCount() {
         return mList.size();
     }
+
+    //Change the list of articles
+    public void updateList(List<ArticleModel> list) {
+        mList = list;
+    }
 }

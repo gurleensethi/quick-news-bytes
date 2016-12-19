@@ -27,7 +27,7 @@ public class NetworkRequests {
 
     //Interfaces for Callbacks
     public interface SourceNewsListener {
-        void onNewsFetched(boolean isSuccessful, List<ArticleModel> models);
+        void onNewsFetched(boolean isSuccessful);
 
         Context getContext();
     }
@@ -66,19 +66,19 @@ public class NetworkRequests {
                             DataManager.getInstance(context).insertNewArticle(model);
                         }
 
-                        listener.onNewsFetched(true, models);
+                        listener.onNewsFetched(true);
                     } else {
-                        listener.onNewsFetched(false, null);
+                        listener.onNewsFetched(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    listener.onNewsFetched(false, null);
+                    listener.onNewsFetched(false);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                listener.onNewsFetched(false, null);
+                listener.onNewsFetched(false);
             }
         });
 

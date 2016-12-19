@@ -22,6 +22,8 @@ public class DataManager {
 
     //Interface for callbacks
     public interface NewsFetchListener {
+        void onOfflineNewsFetched(List<ArticleModel> list);
+
         void onNewsFetched(boolean isSuccessful, List<ArticleModel> articleList);
 
         Context getContext();
@@ -36,17 +38,21 @@ public class DataManager {
 
     //Send request to fetch latest news
     public void fetchLatestNewsBySource(final NewsFetchListener listener) {
+        //Initially send news that is stored in Realm
+        listener.onOfflineNewsFetched(RealmDatabase.getInstance(mContext).getSavedArticles());
+
+        //Fetch latest news from network
         new NetworkRequests().fetchNewsFromSource(mContext, new NetworkRequests.SourceNewsListener() {
             @Override
-            public void onNewsFetched(boolean isSuccessful, List<ArticleModel> list) {
-                listener.onNewsFetched(isSuccessful, list);
+            public void onNewsFetched(boolean isSuccessful) {
+                listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(mContext).getSavedArticles());
             }
 
             @Override
             public Context getContext() {
                 return listener.getContext();
             }
-        }, "techcrunch");
+        }, "bloomberg");
     }
 
     //Insert new Article in Realm

@@ -67,6 +67,8 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
             mNewsFeedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mNewsFeedRecyclerView.setAdapter(mArticlesRecyclerAdapter);
         } else {
+            //Change with the updated list
+            mArticlesRecyclerAdapter.updateList(list);
             mArticlesRecyclerAdapter.notifyDataSetChanged();
         }
     }

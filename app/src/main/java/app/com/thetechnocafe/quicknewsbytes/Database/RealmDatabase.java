@@ -2,8 +2,16 @@ package app.com.thetechnocafe.quicknewsbytes.Database;
 
 import android.content.Context;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import io.realm.Realm;
+import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
@@ -47,5 +55,47 @@ public class RealmDatabase {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Get a list of all saved articles
+     */
+    public List<ArticleModel> getSavedArticles() {
+        List<ArticleModel> mArticlesList = new ArrayList<>();
+
+        //Get the list from database
+        mRealm.beginTransaction();
+        RealmResults realmResults = mRealm.where(ArticleModel.class).findAll();
+
+        mArticlesList.addAll(realmResults);
+
+        Collections.sort(mArticlesList, new Comparator<ArticleModel>() {
+            @Override
+            public int compare(ArticleModel model, ArticleModel t1) {
+                //Create data formatter
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+
+                //Format dates
+                try {
+                    long dateModel = dateFormatter.parse(model.getPublishedAt()).getTime();
+                    long dateT1 = dateFormatter.parse(t1.getPublishedAt()).getTime();
+
+                    if (dateModel > dateT1) {
+                        return 1;
+                    } else if (dateModel < dateT1) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                return 0;
+            }
+        });
+        mRealm.commitTransaction();
+
+        return mArticlesList;
     }
 }
