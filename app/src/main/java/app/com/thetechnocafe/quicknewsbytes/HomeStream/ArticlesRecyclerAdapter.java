@@ -16,6 +16,7 @@ import app.com.thetechnocafe.quicknewsbytes.Database.DataManager;
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
+import app.com.thetechnocafe.quicknewsbytes.Utils.DateFormattingUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -46,6 +47,8 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
         ImageView mArticleImageView;
         @BindView(R.id.author_name_text_view)
         TextView mAuthorNameTextView;
+        @BindView(R.id.time_ago_text_view)
+        TextView mTimeAgoTextView;
 
         public ArticlesViewHolder(View view) {
             super(view);
@@ -58,6 +61,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
             mTitleTextView.setText(mList.get(position).getTitle());
             mDescriptionTextView.setText(mList.get(position).getDescription());
             mAuthorNameTextView.setText(mList.get(position).getAuthorName());
+            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mList.get(position).getPublishedAt()));
 
             //Load the images with Glide
             Glide.with(mContext)
