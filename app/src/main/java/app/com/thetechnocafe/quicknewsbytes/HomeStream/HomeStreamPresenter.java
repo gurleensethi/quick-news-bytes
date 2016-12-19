@@ -21,7 +21,7 @@ public class HomeStreamPresenter implements HomeStreamContract.Presenter, DataMa
 
     @Override
     public void start() {
-        DataManager.getInstance().fetchLatestNewsBySource(this);
+        DataManager.getInstance(mHomeStreamView.getViewContext()).fetchLatestNewsBySource(this);
     }
 
     @Override

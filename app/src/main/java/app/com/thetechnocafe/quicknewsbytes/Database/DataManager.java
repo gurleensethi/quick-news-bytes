@@ -14,9 +14,10 @@ import app.com.thetechnocafe.quicknewsbytes.Networking.NetworkRequests;
 public class DataManager {
 
     private static DataManager mInstance;
+    private Context mContext;
 
-    private DataManager() {
-
+    private DataManager(Context context) {
+        mContext = context;
     }
 
     //Interface for callbacks
@@ -26,16 +27,16 @@ public class DataManager {
         Context getContext();
     }
 
-    public static DataManager getInstance() {
+    public static DataManager getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new DataManager();
+            mInstance = new DataManager(context);
         }
         return mInstance;
     }
 
     //Send request to fetch latest news
     public void fetchLatestNewsBySource(final NewsFetchListener listener) {
-        new NetworkRequests().fetchNewsFromSource(new NetworkRequests.SourceNewsListener() {
+        new NetworkRequests().fetchNewsFromSource(mContext, new NetworkRequests.SourceNewsListener() {
             @Override
             public void onNewsFetched(boolean isSuccessful, List<ArticleModel> list) {
                 listener.onNewsFetched(isSuccessful, list);
@@ -46,5 +47,10 @@ public class DataManager {
                 return listener.getContext();
             }
         }, "techcrunch");
+    }
+
+    //Insert new Article in Realm
+    public boolean insertNewArticle(ArticleModel model) {
+        return RealmDatabase.getInstance(mContext).saveNewArticle(model);
     }
 }

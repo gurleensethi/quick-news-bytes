@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by gurleensethi on 18/12/16.
@@ -15,6 +16,7 @@ public class ArticleModel extends RealmObject {
     private String mAuthorName;
 
     @Expose
+    @PrimaryKey
     @SerializedName("title")
     private String mTitle;
 
@@ -33,6 +35,9 @@ public class ArticleModel extends RealmObject {
     @Expose
     @SerializedName("publishedAt")
     private String mPublishedAt;
+
+    @Expose
+    private String mSourceId;
 
     public String getAuthorName() {
         return mAuthorName;
@@ -80,5 +85,13 @@ public class ArticleModel extends RealmObject {
 
     public void setUrlToImage(String urlToImage) {
         mUrlToImage = urlToImage;
+    }
+
+    public String getSourceId() {
+        return mSourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        mSourceId = sourceId;
     }
 }
