@@ -36,7 +36,6 @@ public class ArticleModel extends RealmObject {
     @SerializedName("publishedAt")
     private String mPublishedAt;
 
-    @Expose
     private String mSourceId;
 
     public String getAuthorName() {

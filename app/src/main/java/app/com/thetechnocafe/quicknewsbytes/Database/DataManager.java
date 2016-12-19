@@ -52,7 +52,7 @@ public class DataManager {
             public Context getContext() {
                 return listener.getContext();
             }
-        }, "bloomberg");
+        }, "the-verge");
     }
 
     //Insert new Article in Realm

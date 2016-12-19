@@ -42,6 +42,8 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
         ImageView mSourceImageView;
         @BindView(R.id.article_image_view)
         ImageView mArticleImageView;
+        @BindView(R.id.author_name_text_view)
+        TextView mAuthorNameTextView;
 
         public ArticlesViewHolder(View view) {
             super(view);
@@ -53,6 +55,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
         public void bindData(int position) {
             mTitleTextView.setText(mList.get(position).getTitle());
             mDescriptionTextView.setText(mList.get(position).getDescription());
+            mAuthorNameTextView.setText(mList.get(position).getAuthorName());
 
             //Load the images with Glide
             Glide.with(mContext)
