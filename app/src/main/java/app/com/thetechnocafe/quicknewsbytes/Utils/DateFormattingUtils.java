@@ -52,18 +52,19 @@ public class DateFormattingUtils {
 
         //If lager than a day then calculate days, else calculate the hours elapsed
         if (isLargerThanADay) {
-            int numOfDays = (int) (timeDifference % Constants.MILLIS_IN_A_DAY);
+            int numOfDays = (int) (timeDifference / Constants.MILLIS_IN_A_DAY);
 
             return numOfDays + " " + Constants.DAYS_AGO;
         } else {
             boolean isLargerThanAnHour = timeDifference >= Constants.MILLIS_IN_AN_HOUR;
 
             if (isLargerThanAnHour) {
-                int numOfHours = (int) (timeDifference % Constants.MILLIS_IN_AN_HOUR);
+                int numOfHours = (int) (timeDifference / Constants.MILLIS_IN_AN_HOUR);
 
                 return numOfHours + " " + Constants.HOURS_AGO;
             } else {
-                return timeDifference % Constants.MILLIS_IN_A_SECOND + " " + Constants.MINUTES_AGO;
+                int numOfMinutes = (int) (timeDifference / Constants.MILLIS_IN_A_SECOND);
+                return numOfMinutes + " " + Constants.MINUTES_AGO;
             }
         }
     }

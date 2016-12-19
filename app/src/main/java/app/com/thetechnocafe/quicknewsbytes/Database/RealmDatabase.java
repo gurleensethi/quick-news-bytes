@@ -76,9 +76,9 @@ public class RealmDatabase {
                 long dateModel = DateFormattingUtils.getInstance().convertToDate(model.getPublishedAt()).getTime();
                 long dateT1 = DateFormattingUtils.getInstance().convertToDate(t1.getPublishedAt()).getTime();
 
-                if (dateModel > dateT1) {
+                if (dateModel < dateT1) {
                     return 1;
-                } else if (dateModel < dateT1) {
+                } else if (dateModel > dateT1) {
                     return -1;
                 } else {
                     return 0;
