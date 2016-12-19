@@ -118,7 +118,7 @@ public class NetworkRequests {
                         }
                     }
                 } catch (JSONException e) {
-                    e.printStackTrace();
+
                 }
             }
         }, new Response.ErrorListener() {
