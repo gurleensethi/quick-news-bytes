@@ -56,7 +56,7 @@ public class DataManager {
             public Context getContext() {
                 return listener.getContext();
             }
-        }, "the-verge");
+        }, "time");
     }
 
     //Insert new Article in Realm
@@ -72,5 +72,10 @@ public class DataManager {
     //Get source model from id
     public SourceModel getSourceFromId(String sourceId) {
         return RealmDatabase.getInstance(mContext).getSourceModel(sourceId);
+    }
+
+    //Remove all articles related to a single source
+    public void removeArticlesOfSource(String source) {
+        RealmDatabase.getInstance(mContext).deleteArticlesFromSource(source);
     }
 }

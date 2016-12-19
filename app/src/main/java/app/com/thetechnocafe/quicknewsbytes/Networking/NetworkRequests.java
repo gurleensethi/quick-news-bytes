@@ -35,6 +35,8 @@ public class NetworkRequests {
 
     public interface SourcesFetcherListener {
         void onSourcesFetched(boolean isSuccessful);
+
+        Context getContext();
     }
 
     /**
@@ -51,6 +53,9 @@ public class NetworkRequests {
                 //Check for status
                 try {
                     if (response.getString(Constants.STATUS).equals(Constants.STATUS_OK)) {
+
+                        //Remove already existing articles with source
+                        DataManager.getInstance(listener.getContext()).removeArticlesOfSource(sourceId);
 
                         //Get the articles array
                         JSONArray articlesArray = response.getJSONArray(Constants.ARTICLES);

@@ -75,7 +75,7 @@ public class RealmDatabase {
             @Override
             public int compare(ArticleModel model, ArticleModel t1) {
                 //Create data formatter
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
                 //Format dates
                 try {
@@ -114,7 +114,7 @@ public class RealmDatabase {
                 }
             });
         } catch (RealmPrimaryKeyConstraintException e) {
-            e.printStackTrace();
+
             return false;
         }
 
@@ -132,6 +132,18 @@ public class RealmDatabase {
         mRealm.commitTransaction();
 
         return source;
+    }
+
+    /**
+     * Remove all the articles related to a particular sourceID
+     */
+    public void deleteArticlesFromSource(final String sourceID) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.where(ArticleModel.class).equalTo(Constants.REALM_ARTICLE_SOURCE_ID, sourceID).findAll().deleteAllFromRealm();
+            }
+        });
     }
 }
 

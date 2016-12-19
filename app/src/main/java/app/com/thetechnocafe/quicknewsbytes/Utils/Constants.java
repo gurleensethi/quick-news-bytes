@@ -14,4 +14,5 @@ public class Constants {
     public static final String SOURCES = "sources";
 
     public static final String REALM_SOURCE_ID = "mID";
+    public static final String REALM_ARTICLE_SOURCE_ID = "mSourceId";
 }
