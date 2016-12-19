@@ -66,10 +66,13 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
 
             //Find corresponding source model
             SourceModel source = DataManager.getInstance(mContext).getSourceFromId(mList.get(position).getSourceId());
+
             if (source != null) {
                 Glide.with(mContext)
                         .load(source.getUrlsToLogos().getMediumImageUrl())
                         .into(mSourceImageView);
+
+                mSourceTextView.setText(source.getName());
             }
         }
     }

@@ -56,7 +56,7 @@ public class DataManager {
             public Context getContext() {
                 return listener.getContext();
             }
-        }, "time");
+        }, "the-verge");
     }
 
     //Insert new Article in Realm
