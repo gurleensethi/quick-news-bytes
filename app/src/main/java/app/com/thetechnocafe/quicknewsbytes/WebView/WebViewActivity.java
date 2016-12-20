@@ -1,11 +1,16 @@
 package app.com.thetechnocafe.quicknewsbytes.WebView;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import app.com.thetechnocafe.quicknewsbytes.R;
 import butterknife.BindView;
@@ -17,6 +22,9 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
     WebView mWebView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+
     private WebViewContract.Presenter mWebViewPresenter;
     public static final String WEB_VIEW_URL_EXTRA = "webviewurlextra";
 
@@ -34,12 +42,34 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Change progress bar color
+        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
+        mProgressBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
+
         configureWebView();
     }
 
     private void configureWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new CustomWebViewClient());
+
+        mProgressBar.setMax(100);
+
+        //Add a loading progress bar
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+
+                if (newProgress == 100) {
+                    mProgressBar.setVisibility(View.GONE);
+                } else {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                }
+
+                mProgressBar.setProgress(newProgress);
+            }
+        });
     }
 
     @Override
