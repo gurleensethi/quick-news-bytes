@@ -1,11 +1,13 @@
 package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -64,6 +66,12 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
                 Color.BLACK
         );
 
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mNewsFeedRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        } else {
+            mNewsFeedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+
         setUpEventListeners();
 
         return view;
@@ -101,7 +109,6 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
     private void setUpOrRefreshRecyclerView(List<ArticleModel> list) {
         if (mArticlesRecyclerAdapter == null) {
             mArticlesRecyclerAdapter = new ArticlesRecyclerAdapter(getContext(), list);
-            mNewsFeedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mNewsFeedRecyclerView.setAdapter(mArticlesRecyclerAdapter);
 
             //Set visibility and make animation

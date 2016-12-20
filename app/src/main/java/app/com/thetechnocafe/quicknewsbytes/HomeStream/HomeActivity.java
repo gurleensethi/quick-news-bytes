@@ -3,6 +3,7 @@ package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -60,8 +61,12 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerLayout.setScrimColor(getResources().getColor(android.R.color.transparent));
         mDrawerLayout.setDrawerElevation(0);
 
-        //Add the fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.coordinator_layout, HomeStreamFragment.getInstance()).commit();
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
+
+        if (fragment == null) {
+            fragmentManager.beginTransaction().add(R.id.fragment_container, HomeStreamFragment.getInstance()).commit();
+        }
     }
 
     private void setUpOnClickListeners() {

@@ -46,7 +46,7 @@ public class DataManager {
         listener.onOfflineNewsFetched(RealmDatabase.getInstance(mContext).getSavedArticles());
 
         //Fetch latest news from network
-        new NetworkRequests().fetchNewsFromSource(new NetworkRequests.SourceNewsListener() {
+        new NetworkRequests().fetchNewsFromSource(mContext, new NetworkRequests.SourceNewsListener() {
             @Override
             public void onNewsFetched(boolean isSuccessful) {
                 listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(mContext).getSavedArticles());

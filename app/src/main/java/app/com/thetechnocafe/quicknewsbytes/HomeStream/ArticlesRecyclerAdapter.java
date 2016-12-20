@@ -51,7 +51,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
         TextView mAuthorNameTextView;
         @BindView(R.id.time_ago_text_view)
         TextView mTimeAgoTextView;
-        private ArticleModel mArticleModel;
+        private int mPosition;
 
         public ArticlesViewHolder(View view) {
             super(view);
@@ -64,13 +64,13 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
 
         public void bindData(int position) {
             //Get the article
-            mArticleModel = mList.get(position);
+            mPosition = position;
 
             //Set the required data for the article
-            mTitleTextView.setText(mArticleModel.getTitle());
-            mDescriptionTextView.setText(mArticleModel.getDescription());
-            mAuthorNameTextView.setText(mArticleModel.getAuthorName());
-            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mContext, mArticleModel.getPublishedAt()));
+            mTitleTextView.setText(mList.get(position).getTitle());
+            mDescriptionTextView.setText(mList.get(position).getDescription());
+            mAuthorNameTextView.setText(mList.get(position).getAuthorName());
+            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mContext, mList.get(position).getPublishedAt()));
 
             //Load the images with Glide
             Glide.with(mContext)
@@ -78,7 +78,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
                     .into(mArticleImageView);
 
             //Find corresponding source model
-            SourceModel source = DataManager.getInstance(mContext).getSourceFromId(mArticleModel.getSourceId());
+            SourceModel source = DataManager.getInstance(mContext).getSourceFromId(mList.get(position).getSourceId());
 
             if (source != null) {
                 Glide.with(mContext)
@@ -92,7 +92,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(mContext, WebViewActivity.class);
-            intent.putExtra(WebViewActivity.WEB_VIEW_URL_EXTRA, mArticleModel.getUrl());
+            intent.putExtra(WebViewActivity.WEB_VIEW_URL_EXTRA, mList.get(mPosition).getUrl());
             mContext.startActivity(intent);
         }
     }
