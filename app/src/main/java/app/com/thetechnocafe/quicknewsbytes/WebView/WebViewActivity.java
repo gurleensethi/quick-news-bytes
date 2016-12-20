@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import app.com.thetechnocafe.quicknewsbytes.R;
 import butterknife.BindView;
@@ -32,11 +33,18 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
         //Set up toolbar
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        configureWebView();
+    }
+
+    private void configureWebView() {
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.setWebViewClient(new CustomWebViewClient());
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume() {
+        super.onResume();
         mWebViewPresenter.onStart();
     }
 
@@ -57,5 +65,17 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
         //Get url from intent and load into the web view
         String URL = getIntent().getStringExtra(WEB_VIEW_URL_EXTRA);
         mWebView.loadUrl(URL);
+    }
+
+    /**
+     * Custom Web View Client
+     * If user clicks on a link on the page the page will be loaded in the same webview
+     * */
+    private class CustomWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
     }
 }
