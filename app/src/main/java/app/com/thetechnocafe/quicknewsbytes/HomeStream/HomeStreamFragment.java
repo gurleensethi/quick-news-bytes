@@ -1,9 +1,11 @@
 package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,6 +29,9 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
 
     @BindView(R.id.news_feed_recycler_view)
     RecyclerView mNewsFeedRecyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     private HomeStreamContract.Presenter mPresenter;
     private ArticlesRecyclerAdapter mArticlesRecyclerAdapter;
 
@@ -50,7 +55,27 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
 
         mPresenter = new HomeStreamPresenter(this);
 
+        //Add colors to swipe refresh layout
+        mSwipeRefreshLayout.setColorSchemeColors(
+                Color.RED,
+                Color.BLUE,
+                Color.CYAN,
+                Color.GREEN,
+                Color.BLACK
+        );
+
+        setUpEventListeners();
+
         return view;
+    }
+
+    private void setUpEventListeners() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.refreshNews();
+            }
+        });
     }
 
     @Override
@@ -61,6 +86,16 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
     @Override
     public void displayNewsList(List<ArticleModel> list) {
         setUpOrRefreshRecyclerView(list);
+    }
+
+    @Override
+    public void startRefreshing() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void stopRefreshing() {
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void setUpOrRefreshRecyclerView(List<ArticleModel> list) {

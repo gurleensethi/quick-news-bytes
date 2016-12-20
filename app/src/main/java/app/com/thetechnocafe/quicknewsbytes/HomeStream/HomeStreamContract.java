@@ -13,11 +13,17 @@ import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 public class HomeStreamContract {
     public interface Presenter {
         void start();
+
+        void refreshNews();
     }
 
     public interface View {
         Context getViewContext();
 
         void displayNewsList(List<ArticleModel> list);
+
+        void startRefreshing();
+
+        void stopRefreshing();
     }
 }

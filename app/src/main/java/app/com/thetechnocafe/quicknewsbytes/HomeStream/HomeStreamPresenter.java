@@ -21,7 +21,13 @@ public class HomeStreamPresenter implements HomeStreamContract.Presenter, DataMa
 
     @Override
     public void start() {
+        refreshNews();
+    }
+
+    @Override
+    public void refreshNews() {
         DataManager.getInstance(mHomeStreamView.getViewContext()).fetchLatestNewsBySource(this);
+        mHomeStreamView.startRefreshing();
     }
 
     @Override
@@ -34,6 +40,8 @@ public class HomeStreamPresenter implements HomeStreamContract.Presenter, DataMa
         if (isSuccessful) {
             mHomeStreamView.displayNewsList(articleList);
         }
+
+        mHomeStreamView.stopRefreshing();
     }
 
     @Override
