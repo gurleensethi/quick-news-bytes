@@ -15,10 +15,9 @@ import app.com.thetechnocafe.quicknewsbytes.Networking.NetworkRequests;
 public class DataManager {
 
     private static DataManager mInstance;
-    private Context mContext;
 
-    private DataManager(Context context) {
-        mContext = context;
+    private DataManager() {
+
     }
 
     //Interface for callbacks
@@ -30,26 +29,26 @@ public class DataManager {
         Context getContext();
     }
 
-    public static DataManager getInstance(Context context) {
+    public static DataManager getInstance() {
         if (mInstance == null) {
-            mInstance = new DataManager(context);
+            mInstance = new DataManager();
         }
         return mInstance;
     }
 
     //Send request to fetch latest news
-    public void fetchLatestNewsBySource(final NewsFetchListener listener) {
+    public void fetchLatestNewsBySource(final Context context, final NewsFetchListener listener) {
         //TODO: Remove this from production code
-        new NetworkRequests().fetchSources(mContext, null);
+        new NetworkRequests().fetchSources(context, null);
 
         //Initially send news that is stored in Realm
-        listener.onOfflineNewsFetched(RealmDatabase.getInstance(mContext).getSavedArticles());
+        listener.onOfflineNewsFetched(RealmDatabase.getInstance(context).getSavedArticles());
 
         //Fetch latest news from network
-        new NetworkRequests().fetchNewsFromSource(mContext, new NetworkRequests.SourceNewsListener() {
+        new NetworkRequests().fetchNewsFromSource(context, new NetworkRequests.SourceNewsListener() {
             @Override
             public void onNewsFetched(boolean isSuccessful) {
-                listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(mContext).getSavedArticles());
+                listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(context).getSavedArticles());
             }
 
             @Override
@@ -60,22 +59,22 @@ public class DataManager {
     }
 
     //Insert new Article in Realm
-    public boolean insertNewArticle(ArticleModel model) {
-        return RealmDatabase.getInstance(mContext).saveNewArticle(model);
+    public boolean insertNewArticle(Context context, ArticleModel model) {
+        return RealmDatabase.getInstance(context).saveNewArticle(model);
     }
 
     //Insert new Source in Realm
-    public boolean insertNewSource(SourceModel model) {
-        return RealmDatabase.getInstance(mContext).saveNewSource(model);
+    public boolean insertNewSource(Context context, SourceModel model) {
+        return RealmDatabase.getInstance(context).saveNewSource(model);
     }
 
     //Get source model from id
-    public SourceModel getSourceFromId(String sourceId) {
-        return RealmDatabase.getInstance(mContext).getSourceModel(sourceId);
+    public SourceModel getSourceFromId(Context context, String sourceId) {
+        return RealmDatabase.getInstance(context).getSourceModel(sourceId);
     }
 
     //Remove all articles related to a single source
-    public void removeArticlesOfSource(String source) {
-        RealmDatabase.getInstance(mContext).deleteArticlesFromSource(source);
+    public void removeArticlesOfSource(Context context, String source) {
+        RealmDatabase.getInstance(context).deleteArticlesFromSource(source);
     }
 }

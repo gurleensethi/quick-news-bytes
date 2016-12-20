@@ -55,7 +55,7 @@ public class NetworkRequests {
                     if (response.getString(Constants.STATUS).equals(Constants.STATUS_OK)) {
 
                         //Remove already existing articles with source
-                        DataManager.getInstance(context).removeArticlesOfSource(sourceId);
+                        DataManager.getInstance().removeArticlesOfSource(context, sourceId);
 
                         //Get the articles array
                         JSONArray articlesArray = response.getJSONArray(Constants.ARTICLES);
@@ -73,7 +73,7 @@ public class NetworkRequests {
                             model.setSourceId(sourceId);
 
                             //Insert to database
-                            DataManager.getInstance(listener.getContext()).insertNewArticle(model);
+                            DataManager.getInstance().insertNewArticle(context, model);
                         }
 
                         listener.onNewsFetched(true);
@@ -119,7 +119,7 @@ public class NetworkRequests {
                             //Get model from GSON and store to realm
                             Gson gson = new Gson();
                             SourceModel source = gson.fromJson(array.getJSONObject(count).toString(), SourceModel.class);
-                            DataManager.getInstance(context).insertNewSource(source);
+                            DataManager.getInstance().insertNewSource(context, source);
                         }
                     }
                 } catch (JSONException e) {

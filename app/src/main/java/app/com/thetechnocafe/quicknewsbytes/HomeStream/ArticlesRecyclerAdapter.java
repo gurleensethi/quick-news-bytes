@@ -78,7 +78,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
                     .into(mArticleImageView);
 
             //Find corresponding source model
-            SourceModel source = DataManager.getInstance(mContext).getSourceFromId(mList.get(position).getSourceId());
+            SourceModel source = DataManager.getInstance().getSourceFromId(mContext, mList.get(position).getSourceId());
 
             if (source != null) {
                 Glide.with(mContext)
