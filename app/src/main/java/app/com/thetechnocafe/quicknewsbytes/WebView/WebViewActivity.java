@@ -8,6 +8,7 @@ import android.webkit.WebView;
 
 import app.com.thetechnocafe.quicknewsbytes.R;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class WebViewActivity extends AppCompatActivity implements WebViewContract.View {
 
@@ -22,6 +23,9 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+
+        //Bind butterknife
+        ButterKnife.bind(this);
 
         mWebViewPresenter = new WebViewPresenter(this);
 

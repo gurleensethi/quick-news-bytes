@@ -1,6 +1,7 @@
 package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import app.com.thetechnocafe.quicknewsbytes.Utils.DateFormattingUtils;
+import app.com.thetechnocafe.quicknewsbytes.WebView.WebViewActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -34,7 +36,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
     }
 
     //View holder for recycler view
-    class ArticlesViewHolder extends RecyclerView.ViewHolder {
+    class ArticlesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.title_text_view)
         TextView mTitleTextView;
         @BindView(R.id.description_text_view)
@@ -49,19 +51,26 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
         TextView mAuthorNameTextView;
         @BindView(R.id.time_ago_text_view)
         TextView mTimeAgoTextView;
+        private ArticleModel mArticleModel;
 
         public ArticlesViewHolder(View view) {
             super(view);
+
+            view.setOnClickListener(this);
 
             //Bind butterknife
             ButterKnife.bind(this, view);
         }
 
         public void bindData(int position) {
-            mTitleTextView.setText(mList.get(position).getTitle());
-            mDescriptionTextView.setText(mList.get(position).getDescription());
-            mAuthorNameTextView.setText(mList.get(position).getAuthorName());
-            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mContext, mList.get(position).getPublishedAt()));
+            //Get the article
+            mArticleModel = mList.get(position);
+
+            //Set the required data for the article
+            mTitleTextView.setText(mArticleModel.getTitle());
+            mDescriptionTextView.setText(mArticleModel.getDescription());
+            mAuthorNameTextView.setText(mArticleModel.getAuthorName());
+            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mContext, mArticleModel.getPublishedAt()));
 
             //Load the images with Glide
             Glide.with(mContext)
@@ -69,7 +78,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
                     .into(mArticleImageView);
 
             //Find corresponding source model
-            SourceModel source = DataManager.getInstance(mContext).getSourceFromId(mList.get(position).getSourceId());
+            SourceModel source = DataManager.getInstance(mContext).getSourceFromId(mArticleModel.getSourceId());
 
             if (source != null) {
                 Glide.with(mContext)
@@ -78,6 +87,13 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
 
                 mSourceTextView.setText(source.getName());
             }
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(mContext, WebViewActivity.class);
+            intent.putExtra(WebViewActivity.WEB_VIEW_URL_EXTRA, mArticleModel.getUrl());
+            mContext.startActivity(intent);
         }
     }
 

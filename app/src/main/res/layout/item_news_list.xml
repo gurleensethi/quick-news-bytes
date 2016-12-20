@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical">
 
     <LinearLayout
@@ -29,16 +31,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:textSize="12sp"
-                android:text="The Verge"/>
+                android:text="The Verge"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/time_ago_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:textSize="12sp"
-                android:text="16 hours ago"/>
+                android:text="16 hours ago"
+                android:textSize="12sp"/>
 
         </LinearLayout>
 
@@ -78,9 +80,9 @@
                 android:id="@+id/article_image_view"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
-                android:layout_weight="4"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_weight="4"
                 android:src="@mipmap/ic_launcher"/>
 
         </LinearLayout>
