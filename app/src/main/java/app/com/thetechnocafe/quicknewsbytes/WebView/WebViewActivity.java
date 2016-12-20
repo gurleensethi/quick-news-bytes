@@ -70,12 +70,21 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
     /**
      * Custom Web View Client
      * If user clicks on a link on the page the page will be loaded in the same webview
-     * */
+     */
     private class CustomWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        } else {
+            super.onBackPressed();
         }
     }
 }
