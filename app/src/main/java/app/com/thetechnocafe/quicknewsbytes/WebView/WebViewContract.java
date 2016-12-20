@@ -6,7 +6,7 @@ package app.com.thetechnocafe.quicknewsbytes.WebView;
 
 public class WebViewContract {
     public interface View {
-
+        void loadURLInWebView();
     }
 
     public interface Presenter {

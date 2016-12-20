@@ -15,8 +15,8 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
     WebView mWebView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-
     private WebViewContract.Presenter mWebViewPresenter;
+    public static final String WEB_VIEW_URL_EXTRA = "webviewurlextra";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,12 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
     }
 
     @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        mWebViewPresenter.onStart();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
@@ -40,5 +46,12 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void loadURLInWebView() {
+        //Get url from intent and load into the web view
+        String URL = getIntent().getStringExtra(WEB_VIEW_URL_EXTRA);
+        mWebView.loadUrl(URL);
     }
 }

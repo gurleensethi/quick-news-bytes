@@ -14,6 +14,6 @@ public class WebViewPresenter implements WebViewContract.Presenter {
 
     @Override
     public void onStart() {
-
+        mWebView.loadURLInWebView();
     }
 }
