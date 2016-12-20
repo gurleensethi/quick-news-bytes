@@ -32,16 +32,11 @@ public class HomeStreamPresenter implements HomeStreamContract.Presenter, DataMa
 
     @Override
     public void onOfflineNewsFetched(List<ArticleModel> list) {
-        if (mHomeStreamView.getViewContext() != null) {
-            mHomeStreamView.displayNewsList(list);
-        }
+        mHomeStreamView.displayNewsList(list);
     }
 
     @Override
     public void onNewsFetched(boolean isSuccessful, List<ArticleModel> articleList) {
-        if (mHomeStreamView.getViewContext() == null) {
-            return;
-        }
         if (isSuccessful) {
             mHomeStreamView.displayNewsList(articleList);
         }
