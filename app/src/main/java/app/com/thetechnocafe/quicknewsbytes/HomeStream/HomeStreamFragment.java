@@ -116,6 +116,7 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
                     Intent intent = new Intent(getActivity(), WebViewActivity.class);
                     intent.putExtra(WebViewActivity.WEB_VIEW_URL_EXTRA, item.getUrl());
                     startActivity(intent);
+                    getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
 
                 @Override

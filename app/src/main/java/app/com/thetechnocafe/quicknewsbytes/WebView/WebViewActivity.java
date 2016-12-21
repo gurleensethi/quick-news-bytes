@@ -115,6 +115,7 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
             mWebView.goBack();
         } else {
             super.onBackPressed();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 }
