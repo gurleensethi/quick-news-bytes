@@ -21,6 +21,8 @@ public class HomeActivity extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
     @BindView(R.id.navigation_drawer)
     LinearLayout mLinearLayout;
+    @BindView(R.id.right_navigation_drawer)
+    LinearLayout mRightNavigationDrawer;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.coordinator_layout)
@@ -48,6 +50,11 @@ public class HomeActivity extends AppCompatActivity {
                 super.onDrawerSlide(drawerView, slideOffset);
 
                 float moveFactor = (mLinearLayout.getWidth() * slideOffset);
+
+                //If right navigation drawer
+                if (drawerView.getId() == mRightNavigationDrawer.getId()) {
+                    moveFactor = -moveFactor;
+                }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     mCoordinatorLayout.setTranslationX(moveFactor);

@@ -22,9 +22,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="enterAlways|scroll"
                 app:title="@string/news_feed"
-                app:titleTextColor="@color/md_grey_600"
-                app:layout_scrollFlags="enterAlways|scroll">
+                app:titleTextColor="@color/md_grey_600">
 
             </android.support.v7.widget.Toolbar>
 
@@ -41,5 +41,9 @@
     <include
         android:id="@+id/navigation_drawer"
         layout="@layout/navigation_drawer"/>
+
+    <include
+        android:id="@+id/right_navigation_drawer"
+        layout="@layout/right_navigation_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>
