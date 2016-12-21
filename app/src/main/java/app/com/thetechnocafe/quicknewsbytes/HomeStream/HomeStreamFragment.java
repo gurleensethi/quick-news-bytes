@@ -1,6 +1,7 @@
 package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
+import app.com.thetechnocafe.quicknewsbytes.WebView.WebViewActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -108,7 +110,19 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
 
     private void setUpOrRefreshRecyclerView(List<ArticleModel> list) {
         if (mArticlesRecyclerAdapter == null) {
-            mArticlesRecyclerAdapter = new ArticlesRecyclerAdapter(getContext(), list);
+            mArticlesRecyclerAdapter = new ArticlesRecyclerAdapter(new ArticlesRecyclerAdapter.ArticleEventListener() {
+                @Override
+                public void onArticleClicked(ArticleModel item) {
+                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                    intent.putExtra(WebViewActivity.WEB_VIEW_URL_EXTRA, item.getUrl());
+                    startActivity(intent);
+                }
+
+                @Override
+                public Context getContext() {
+                    return HomeStreamFragment.this.getContext();
+                }
+            }, list);
             mNewsFeedRecyclerView.setAdapter(mArticlesRecyclerAdapter);
 
             //Set visibility and make animation

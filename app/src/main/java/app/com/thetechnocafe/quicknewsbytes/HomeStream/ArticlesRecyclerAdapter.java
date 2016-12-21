@@ -1,7 +1,6 @@
 package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import app.com.thetechnocafe.quicknewsbytes.Utils.DateFormattingUtils;
-import app.com.thetechnocafe.quicknewsbytes.WebView.WebViewActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,16 +25,25 @@ import butterknife.ButterKnife;
  */
 
 public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecyclerAdapter.ArticlesViewHolder> {
-    private Context mContext;
+    //Interface for event callback
+    public interface ArticleEventListener {
+        void onArticleClicked(ArticleModel item);
+
+        Context getContext();
+    }
+
+    ;
+
+    private ArticleEventListener mArticleEventListener;
     private List<ArticleModel> mList;
 
-    public ArticlesRecyclerAdapter(Context context, List<ArticleModel> list) {
-        mContext = context;
+    public ArticlesRecyclerAdapter(ArticleEventListener listener, List<ArticleModel> list) {
+        mArticleEventListener = listener;
         mList = list;
     }
 
     //View holder for recycler view
-    class ArticlesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ArticlesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.title_text_view)
         TextView mTitleTextView;
         @BindView(R.id.description_text_view)
@@ -70,18 +77,18 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
             mTitleTextView.setText(mList.get(position).getTitle());
             mDescriptionTextView.setText(mList.get(position).getDescription());
             mAuthorNameTextView.setText(mList.get(position).getAuthorName());
-            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mContext, mList.get(position).getPublishedAt()));
+            mTimeAgoTextView.setText(DateFormattingUtils.getInstance().convertToTimeElapsedString(mArticleEventListener.getContext(), mList.get(position).getPublishedAt()));
 
             //Load the images with Glide
-            Glide.with(mContext)
+            Glide.with(mArticleEventListener.getContext())
                     .load(mList.get(position).getUrlToImage())
                     .into(mArticleImageView);
 
             //Find corresponding source model
-            SourceModel source = DataManager.getInstance().getSourceFromId(mContext, mList.get(position).getSourceId());
+            SourceModel source = DataManager.getInstance().getSourceFromId(mArticleEventListener.getContext(), mList.get(position).getSourceId());
 
             if (source != null) {
-                Glide.with(mContext)
+                Glide.with(mArticleEventListener.getContext())
                         .load(source.getUrlsToLogos().getMediumImageUrl())
                         .into(mSourceImageView);
 
@@ -91,15 +98,13 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(mContext, WebViewActivity.class);
-            intent.putExtra(WebViewActivity.WEB_VIEW_URL_EXTRA, mList.get(mPosition).getUrl());
-            mContext.startActivity(intent);
+            mArticleEventListener.onArticleClicked(mList.get(mPosition));
         }
     }
 
     @Override
     public ArticlesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_news_list, parent, false);
+        View view = LayoutInflater.from(mArticleEventListener.getContext()).inflate(R.layout.item_news_list, parent, false);
         return new ArticlesViewHolder(view);
     }
 
