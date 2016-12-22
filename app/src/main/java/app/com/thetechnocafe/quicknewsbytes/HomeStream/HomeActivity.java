@@ -25,7 +25,7 @@ import app.com.thetechnocafe.quicknewsbytes.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements HomeStreamActivityContract.View {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -44,6 +44,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private SourcesRecyclerAdapter mSourcesRecyclerAdapter;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
+    private HomeStreamActivityContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class HomeActivity extends AppCompatActivity {
 
         //Bind Butterknife
         ButterKnife.bind(this);
+
+        mPresenter = new HomeStreamActivityPresenter(this);
 
         //Set up toolbar
         setSupportActionBar(mToolbar);
@@ -136,5 +139,10 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             mSourcesRecyclerAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onSourcesFetched(List<SourceModel> sourcesList) {
+        setUpOrRefreshRecyclerView(sourcesList);
     }
 }
