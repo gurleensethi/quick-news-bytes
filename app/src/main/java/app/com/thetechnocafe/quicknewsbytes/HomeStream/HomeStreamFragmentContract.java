@@ -10,7 +10,7 @@ import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
  * Created by gurleensethi on 18/12/16.
  */
 
-public class HomeStreamContract {
+public class HomeStreamFragmentContract {
     public interface Presenter {
         void start();
 

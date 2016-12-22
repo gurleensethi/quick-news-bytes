@@ -11,11 +11,11 @@ import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
  * Created by gurleensethi on 18/12/16.
  */
 
-public class HomeStreamPresenter implements HomeStreamContract.Presenter, DataManager.NewsFetchListener {
+public class HomeStreamFragmentPresenter implements HomeStreamFragmentContract.Presenter, DataManager.NewsFetchListener {
 
-    private HomeStreamContract.View mHomeStreamView;
+    private HomeStreamFragmentContract.View mHomeStreamView;
 
-    public HomeStreamPresenter(HomeStreamContract.View view) {
+    public HomeStreamFragmentPresenter(HomeStreamFragmentContract.View view) {
         mHomeStreamView = view;
     }
 

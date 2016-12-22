@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">QuickNewsBytes</string>
     <string name="news_feed">News Feed</string>
+    <string name="refresh_sources">Refresh Sources</string>
     <plurals name="hoursAgo">
         <item quantity="one">%d hour ago</item>
         <item quantity="other">%d hours ago</item>

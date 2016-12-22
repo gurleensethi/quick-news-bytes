@@ -29,14 +29,14 @@ import butterknife.ButterKnife;
  * Created by gurleensethi on 18/12/16.
  */
 
-public class HomeStreamFragment extends Fragment implements HomeStreamContract.View {
+public class HomeStreamFragment extends Fragment implements HomeStreamFragmentContract.View {
 
     @BindView(R.id.news_feed_recycler_view)
     RecyclerView mNewsFeedRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private HomeStreamContract.Presenter mPresenter;
+    private HomeStreamFragmentContract.Presenter mPresenter;
     private ArticlesRecyclerAdapter mArticlesRecyclerAdapter;
 
     public static HomeStreamFragment getInstance() {
@@ -57,7 +57,7 @@ public class HomeStreamFragment extends Fragment implements HomeStreamContract.V
         //Bind Butterknife
         ButterKnife.bind(this, view);
 
-        mPresenter = new HomeStreamPresenter(this);
+        mPresenter = new HomeStreamFragmentPresenter(this);
 
         //Add colors to swipe refresh layout
         mSwipeRefreshLayout.setColorSchemeColors(

@@ -8,13 +8,19 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import java.util.List;
+
+import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +37,12 @@ public class HomeActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.coordinator_layout)
     CoordinatorLayout mCoordinatorLayout;
+    @BindView(R.id.new_feed_text_view)
+    TextView mNewsFeedTextView;
+    @BindView(R.id.right_recycler_view)
+    RecyclerView mSourcesRecyclerView;
 
+    private SourcesRecyclerAdapter mSourcesRecyclerAdapter;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     @Override
@@ -72,12 +83,17 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerLayout.setScrimColor(getResources().getColor(android.R.color.transparent));
         mDrawerLayout.setDrawerElevation(0);
 
+        //Configure recycler view
+        mSourcesRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
 
         if (fragment == null) {
             fragmentManager.beginTransaction().add(R.id.fragment_container, HomeStreamFragment.getInstance()).commit();
         }
+
+        setUpOnClickListeners();
     }
 
     private void setUpOnClickListeners() {
@@ -96,7 +112,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_right_navigation: {
-                if(mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
                     mDrawerLayout.closeDrawer(GravityCompat.END);
                 } else {
                     mDrawerLayout.openDrawer(GravityCompat.END);
@@ -104,5 +120,21 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpOrRefreshRecyclerView(List<SourceModel> sourcesList) {
+        if (mSourcesRecyclerAdapter == null) {
+            //Create new Adapter
+            mSourcesRecyclerAdapter = new SourcesRecyclerAdapter(getApplicationContext(), sourcesList, new SourcesRecyclerAdapter.SourcesEventListener() {
+                @Override
+                public void onSourceItemClicked(SourceModel item) {
+
+                }
+            });
+
+            mSourcesRecyclerView.setAdapter(mSourcesRecyclerAdapter);
+        } else {
+            mSourcesRecyclerAdapter.notifyDataSetChanged();
+        }
     }
 }
