@@ -39,7 +39,7 @@ public class SourcesRecyclerAdapter extends RecyclerView.Adapter<SourcesRecycler
 
     @Override
     public SourcesRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_sources_navigation_drawer, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_sources_navigation_drawer, parent, false);
         return new SourcesRecyclerViewHolder(view);
     }
 
@@ -64,7 +64,10 @@ public class SourcesRecyclerAdapter extends RecyclerView.Adapter<SourcesRecycler
         public SourcesRecyclerViewHolder(View view) {
             super(view);
 
+            //Bind butterknife
             ButterKnife.bind(this, view);
+
+            view.setOnClickListener(this);
         }
 
         public void bindData(int position) {

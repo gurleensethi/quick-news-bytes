@@ -20,13 +20,18 @@ public class DataManager {
 
     }
 
-    //Interface for callbacks
+    //Interface for News callbacks
     public interface NewsFetchListener {
         void onOfflineNewsFetched(List<ArticleModel> list);
 
         void onNewsFetched(boolean isSuccessful, List<ArticleModel> articleList);
 
         Context getContext();
+    }
+
+    //Interface for sources callbacks
+    public interface SourcesFetchListener {
+        void onSourcesFetched(List<SourceModel> sourcesList);
     }
 
     public static DataManager getInstance() {
@@ -76,5 +81,13 @@ public class DataManager {
     //Remove all articles related to a single source
     public void removeArticlesOfSource(Context context, String source) {
         RealmDatabase.getInstance(context).deleteArticlesFromSource(source);
+    }
+
+    //Fetch Offline Sources
+    public void getAllStoredSources(final Context context, final SourcesFetchListener listener) {
+        //Get all source from realm database
+        List<SourceModel> sourcesList = RealmDatabase.getInstance(context).getAllSources();
+
+        listener.onSourcesFetched(sourcesList);
     }
 }

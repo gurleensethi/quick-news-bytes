@@ -1,5 +1,6 @@
 package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -99,6 +100,12 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         setUpOnClickListeners();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onStart();
+    }
+
     private void setUpOnClickListeners() {
 
     }
@@ -144,5 +151,10 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     @Override
     public void onSourcesFetched(List<SourceModel> sourcesList) {
         setUpOrRefreshRecyclerView(sourcesList);
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 }

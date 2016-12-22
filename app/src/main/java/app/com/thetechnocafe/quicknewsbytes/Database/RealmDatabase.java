@@ -134,5 +134,22 @@ public class RealmDatabase {
             }
         });
     }
+
+    /**
+     * Get list of all stored sources
+     */
+    public List<SourceModel> getAllSources() {
+        final List<SourceModel> mSourcesList = new ArrayList<>();
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                mSourcesList.addAll(realm.where(SourceModel.class)
+                        .findAll());
+            }
+        });
+
+        return mSourcesList;
+    }
 }
 
