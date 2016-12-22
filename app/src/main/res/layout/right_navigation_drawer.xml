@@ -24,16 +24,10 @@
             android:textColor="@color/md_grey_600"
             android:textSize="20sp"/>
 
-        <TextView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/md_grey_600"
-            android:gravity="center"
-
-            android:text="@string/sources"
-            android:textAllCaps="true"
-            android:textColor="@color/md_white_1000"
-            android:textSize="12sp"/>
+            android:layout_height="0.1dp"
+            android:background="@android:color/darker_gray"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/right_recycler_view"
