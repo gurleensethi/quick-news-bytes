@@ -16,10 +16,10 @@
         <TextView
             android:id="@+id/new_feed_text_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:clickable="true"
             android:gravity="center_vertical"
-            android:padding="16dp"
+            android:paddingLeft="16dp"
             android:text="@string/main_news_feed"
             android:textColor="@color/md_grey_600"
             android:textSize="20sp"/>
