@@ -89,7 +89,7 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
 
             if (source != null) {
                 Glide.with(mArticleEventListener.getContext())
-                        .load(source.getUrlsToLogos().getMediumImageUrl())
+                        .load(source.getUrlsToLogos().getSmallImageUrl())
                         .into(mSourceImageView);
 
                 mSourceTextView.setText(source.getName());
