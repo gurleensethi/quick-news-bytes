@@ -166,7 +166,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
 
-        if (fragment == null) {
+        if (fragment == null || !(fragment instanceof HomeStreamFragment)) {
             fragmentManager.beginTransaction().replace(R.id.fragment_container, HomeStreamFragment.getInstance()).commit();
         }
     }
