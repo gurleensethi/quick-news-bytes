@@ -90,13 +90,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         //Configure recycler view
         mSourcesRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
-
-        if (fragment == null) {
-            fragmentManager.beginTransaction().add(R.id.fragment_container, HomeStreamFragment.getInstance()).commit();
-        }
-
+        addHomeStreamFragment();
         setUpOnClickListeners();
     }
 
@@ -107,7 +101,15 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     }
 
     private void setUpOnClickListeners() {
+        mNewsFeedTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addHomeStreamFragment();
 
+                //Close drawer
+                mDrawerLayout.closeDrawer(GravityCompat.END);
+            }
+        });
     }
 
     @Override
@@ -138,7 +140,8 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
             mSourcesRecyclerAdapter = new SourcesRecyclerAdapter(getApplicationContext(), sourcesList, new SourcesRecyclerAdapter.SourcesEventListener() {
                 @Override
                 public void onSourceItemClicked(SourceModel item) {
-
+                    //Close the drawer
+                    mDrawerLayout.closeDrawer(GravityCompat.END);
                 }
             });
 
@@ -156,5 +159,15 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     @Override
     public Context getContext() {
         return getApplicationContext();
+    }
+
+    //Set the main home stream fragment in the fragment container
+    private void addHomeStreamFragment() {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
+
+        if (fragment == null) {
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, HomeStreamFragment.getInstance()).commit();
+        }
     }
 }
