@@ -42,7 +42,7 @@ public class DataManager {
     }
 
     //Send request to fetch latest news
-    public void fetchLatestNewsBySource(final Context context, final NewsFetchListener listener) {
+    public void fetchLatestNewsBySource(final Context context, String sourceID, final NewsFetchListener listener) {
         //TODO: Remove this from production code
         new NetworkRequests().fetchSources(context, null);
 
@@ -60,7 +60,7 @@ public class DataManager {
             public Context getContext() {
                 return listener.getContext();
             }
-        }, "the-verge");
+        }, sourceID);
     }
 
     //Insert new Article in Realm

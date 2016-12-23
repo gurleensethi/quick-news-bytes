@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +22,7 @@ import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
+import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -90,7 +90,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         //Configure recycler view
         mSourcesRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        addHomeStreamFragment();
+        addSourceStreamFragment(Constants.HOME_STREAM);
         setUpOnClickListeners();
     }
 
@@ -104,7 +104,10 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         mNewsFeedTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addHomeStreamFragment();
+                addSourceStreamFragment(Constants.HOME_STREAM);
+
+                //Change toolbar title
+                mToolbar.setTitle(getString(R.string.news_feed));
 
                 //Close drawer
                 mDrawerLayout.closeDrawer(GravityCompat.END);
@@ -140,6 +143,12 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
             mSourcesRecyclerAdapter = new SourcesRecyclerAdapter(getApplicationContext(), sourcesList, new SourcesRecyclerAdapter.SourcesEventListener() {
                 @Override
                 public void onSourceItemClicked(SourceModel item) {
+                    //Replace fragment
+                    addSourceStreamFragment(item.getID());
+
+                    //Change toolbar title
+                    mToolbar.setTitle(item.getName());
+
                     //Close the drawer
                     mDrawerLayout.closeDrawer(GravityCompat.END);
                 }
@@ -161,13 +170,9 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         return getApplicationContext();
     }
 
-    //Set the main home stream fragment in the fragment container
-    private void addHomeStreamFragment() {
+    //Add particular source stream
+    private void addSourceStreamFragment(String sourceID) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
-
-        if (fragment == null || !(fragment instanceof HomeStreamFragment)) {
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, HomeStreamFragment.getInstance()).commit();
-        }
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, HomeStreamFragment.getInstance(sourceID)).commit();
     }
 }

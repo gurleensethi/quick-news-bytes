@@ -38,15 +38,25 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
 
     private HomeStreamFragmentContract.Presenter mPresenter;
     private ArticlesRecyclerAdapter mArticlesRecyclerAdapter;
+    private static final String ARG_SOURCE_ID = "sourceid";
 
-    public static HomeStreamFragment getInstance() {
-        return new HomeStreamFragment();
+    public static Fragment getInstance(String sourceID) {
+        //Create arguments
+        Bundle args = new Bundle();
+        args.putString(ARG_SOURCE_ID, sourceID);
+
+        //Create fragment and set arguments
+        Fragment fragment = new HomeStreamFragment();
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mPresenter.start();
+        mPresenter.refreshNews(getArguments().getString(ARG_SOURCE_ID));
     }
 
     @Nullable
@@ -83,7 +93,7 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.refreshNews();
+                mPresenter.refreshNews(getArguments().getString(ARG_SOURCE_ID));
             }
         });
     }

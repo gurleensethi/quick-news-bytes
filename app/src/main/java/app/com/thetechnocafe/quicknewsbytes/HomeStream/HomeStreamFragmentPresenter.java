@@ -6,6 +6,7 @@ import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Database.DataManager;
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
+import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
 
 /**
  * Created by gurleensethi on 18/12/16.
@@ -21,12 +22,16 @@ public class HomeStreamFragmentPresenter implements HomeStreamFragmentContract.P
 
     @Override
     public void start() {
-        refreshNews();
+
     }
 
     @Override
-    public void refreshNews() {
-        DataManager.getInstance().fetchLatestNewsBySource(mHomeStreamView.getViewContext(), this);
+    public void refreshNews(String sourceID) {
+        if (sourceID.equals(Constants.HOME_STREAM)) {
+            DataManager.getInstance().fetchLatestNewsBySource(mHomeStreamView.getViewContext(), "the-verge", this);
+        } else {
+            DataManager.getInstance().fetchLatestNewsBySource(mHomeStreamView.getViewContext(), sourceID, this);
+        }
         mHomeStreamView.startRefreshing();
     }
 

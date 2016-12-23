@@ -14,7 +14,7 @@ public class HomeStreamFragmentContract {
     public interface Presenter {
         void start();
 
-        void refreshNews();
+        void refreshNews(String sourceID);
     }
 
     public interface View {
