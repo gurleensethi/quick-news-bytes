@@ -44,6 +44,8 @@ public class SourceModel extends RealmObject {
     @SerializedName("urlsToLogos")
     private UrlsToLogoModel mUrlsToLogos;
 
+    private boolean mSaved;
+
     public String getCategory() {
         return mCategory;
     }
@@ -106,5 +108,13 @@ public class SourceModel extends RealmObject {
 
     public void setUrlsToLogos(UrlsToLogoModel urlsToLogos) {
         mUrlsToLogos = urlsToLogos;
+    }
+
+    public boolean isSaved() {
+        return mSaved;
+    }
+
+    public void setSaved(boolean saved) {
+        mSaved = saved;
     }
 }
