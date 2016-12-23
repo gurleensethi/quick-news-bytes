@@ -28,7 +28,7 @@ public class HomeStreamFragmentPresenter implements HomeStreamFragmentContract.P
     @Override
     public void refreshNews(String sourceID) {
         if (sourceID.equals(Constants.HOME_STREAM)) {
-            DataManager.getInstance().fetchLatestNewsBySource(mHomeStreamView.getViewContext(), "the-verge", this);
+            DataManager.getInstance().fetchArticlesForNewsFeed(mHomeStreamView.getViewContext(), this);
         } else {
             DataManager.getInstance().fetchLatestNewsBySource(mHomeStreamView.getViewContext(), sourceID, this);
         }

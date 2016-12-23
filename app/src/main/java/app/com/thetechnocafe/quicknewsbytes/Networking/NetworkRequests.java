@@ -29,14 +29,71 @@ public class NetworkRequests {
     //Interfaces for Callbacks
     public interface SourceNewsListener {
         void onNewsFetched(boolean isSuccessful);
-
-        Context getContext();
     }
 
     public interface SourcesFetcherListener {
         void onSourcesFetched(boolean isSuccessful);
 
         Context getContext();
+    }
+
+    public interface SingleSourceFetchListener {
+        void onArticlesFetched(boolean isSuccessful, List<ArticleModel> articlesList);
+    }
+
+    /**
+     * Fetch articles from a Single Source
+     */
+    public void fetchArticlesFromSingleSource(final Context context, final SingleSourceFetchListener listener, final String sourceId) {
+        String completeURL = Constants.BASE_ARTICLES_URL + sourceId + Constants.NEWS_API_KEY;
+
+        //Create JSON Request
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, completeURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                //Check for status
+                try {
+                    if (response.getString(Constants.STATUS).equals(Constants.STATUS_OK)) {
+
+                        //Remove already existing articles with source
+                        DataManager.getInstance().removeArticlesOfSource(context, sourceId);
+
+                        //Get the articles array
+                        JSONArray articlesArray = response.getJSONArray(Constants.ARTICLES);
+
+                        List<ArticleModel> articlesList = new ArrayList<>();
+
+                        //Iterate and convert using GSON
+                        for (int count = 0; count < articlesArray.length(); count++) {
+                            //Get model using GSON
+                            Gson gson = new Gson();
+                            ArticleModel model = gson.fromJson(articlesArray.getJSONObject(count).toString(), ArticleModel.class);
+
+                            //Set the source id
+                            model.setSourceId(sourceId);
+
+                            //Add to list
+                            articlesList.add(model);
+                        }
+
+                        listener.onArticlesFetched(true, articlesList);
+                    } else {
+                        listener.onArticlesFetched(false, null);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onArticlesFetched(false, null);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onArticlesFetched(false, null);
+            }
+        });
+
+        //Add to request queue
+        VolleyRequestQueue.getInstance(context).getRequestQueue().add(request);
     }
 
     /**
@@ -93,7 +150,7 @@ public class NetworkRequests {
         });
 
         //Add to request queue
-        VolleyRequestQueue.getInstance(listener.getContext()).getRequestQueue().add(request);
+        VolleyRequestQueue.getInstance(context).getRequestQueue().add(request);
     }
 
     /**

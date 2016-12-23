@@ -50,17 +50,28 @@ public class DataManager {
         listener.onOfflineNewsFetched(RealmDatabase.getInstance(context).getSavedArticles());
 
         //Fetch latest news from network
-        new NetworkRequests().fetchNewsFromSource(context, new NetworkRequests.SourceNewsListener() {
+        new NetworkRequests().fetchArticlesFromSingleSource(context, new NetworkRequests.SingleSourceFetchListener() {
             @Override
-            public void onNewsFetched(boolean isSuccessful) {
-                listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(context).getSavedArticles());
-            }
-
-            @Override
-            public Context getContext() {
-                return listener.getContext();
+            public void onArticlesFetched(boolean isSuccessful, List<ArticleModel> articlesList) {
+                listener.onNewsFetched(isSuccessful, articlesList);
             }
         }, sourceID);
+    }
+
+    //Send request to fetch all the sources that are saved
+    public void fetchArticlesForNewsFeed(final Context context, final NewsFetchListener listener) {
+        //Get all the saved sources
+        List<SourceModel> mSourceList = RealmDatabase.getInstance(context).getSavedSources();
+
+        //Iterate and get all sources
+        for (SourceModel model : mSourceList) {
+            new NetworkRequests().fetchNewsFromSource(context, new NetworkRequests.SourceNewsListener() {
+                @Override
+                public void onNewsFetched(boolean isSuccessful) {
+                    listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(context).getSavedArticles());
+                }
+            }, model.getID());
+        }
     }
 
     //Insert new Article in Realm

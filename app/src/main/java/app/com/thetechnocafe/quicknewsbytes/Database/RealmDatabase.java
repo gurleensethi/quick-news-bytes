@@ -144,8 +144,30 @@ public class RealmDatabase {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                mSourcesList.addAll(realm.where(SourceModel.class)
-                        .findAll());
+                mSourcesList.addAll(
+                        realm.where(SourceModel.class)
+                                .findAll());
+            }
+        });
+
+        return mSourcesList;
+    }
+
+    /**
+     * Get all the sources that have been saved,
+     * to show up in the home stream
+     */
+    public List<SourceModel> getSavedSources() {
+        final List<SourceModel> mSourcesList = new ArrayList<>();
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                mSourcesList.addAll(
+                        realm.where(SourceModel.class)
+                                .equalTo(Constants.REALM_SOURCE_SAVED, true)
+                                .findAll()
+                );
             }
         });
 
