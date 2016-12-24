@@ -21,7 +21,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
             android:text="@string/main_news_feed"
-            android:textColor="@color/md_grey_600"
+            android:textColor="@color/md_black_1000"
             android:textSize="20sp"/>
 
         <View

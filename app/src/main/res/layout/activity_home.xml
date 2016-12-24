@@ -24,7 +24,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="enterAlways|scroll"
                 app:title="@string/news_feed"
-                app:titleTextColor="@color/md_grey_600">
+                app:titleTextColor="@color/md_black_1000">
 
             </android.support.v7.widget.Toolbar>
 

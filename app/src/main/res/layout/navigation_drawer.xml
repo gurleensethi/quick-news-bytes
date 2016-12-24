@@ -13,7 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:gravity="center"
         android:text="Quick News Bytes"
-        android:textColor="@color/md_grey_600"
+        android:textColor="@color/md_black_1000"
         android:textSize="20sp"/>
 
     <android.support.v7.widget.RecyclerView
