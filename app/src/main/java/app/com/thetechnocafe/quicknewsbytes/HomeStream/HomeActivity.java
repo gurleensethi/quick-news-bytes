@@ -42,8 +42,11 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     TextView mNewsFeedTextView;
     @BindView(R.id.right_recycler_view)
     RecyclerView mSourcesRecyclerView;
+    @BindView(R.id.navigation_recycler_view)
+    RecyclerView mLeftNavigationRecyclerView;
 
     private SourcesRecyclerAdapter mSourcesRecyclerAdapter;
+    private LeftNavigationRecyclerAdapter mLeftNavigationRecyclerAdapter;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private HomeStreamActivityContract.Presenter mPresenter;
 
@@ -92,6 +95,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
 
         addSourceStreamFragment(Constants.HOME_STREAM);
         setUpOnClickListeners();
+        setUpLeftNavigationRecyclerView();
     }
 
     @Override
@@ -157,6 +161,23 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
             mSourcesRecyclerView.setAdapter(mSourcesRecyclerAdapter);
         } else {
             mSourcesRecyclerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setUpLeftNavigationRecyclerView() {
+        if(mLeftNavigationRecyclerAdapter == null) {
+            //Get the list of options
+            String[] options = getResources().getStringArray(R.array.left_navigation);
+
+            mLeftNavigationRecyclerAdapter = new LeftNavigationRecyclerAdapter(getContext(), options, new LeftNavigationRecyclerAdapter.OnOptionItemSelectedListener() {
+                @Override
+                public void onOptionClicked(String string) {
+
+                }
+            });
+
+            mLeftNavigationRecyclerView.setAdapter(mLeftNavigationRecyclerAdapter);
+            mLeftNavigationRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
     }
 

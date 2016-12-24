@@ -17,4 +17,9 @@
         <item quantity="one">%d minute ago</item>
         <item quantity="other">%d minutes ago</item>
     </plurals>
+    <string-array name="left_navigation">
+        <item>News Feed</item>
+        <item>Customize News Feed</item>
+        <item>About</item>
+    </string-array>
 </resources>
