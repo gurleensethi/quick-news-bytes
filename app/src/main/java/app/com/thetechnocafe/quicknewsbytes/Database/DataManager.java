@@ -46,9 +46,6 @@ public class DataManager {
         //TODO: Remove this from production code
         new NetworkRequests().fetchSources(context, null);
 
-        //Initially send news that is stored in Realm
-        listener.onOfflineNewsFetched(RealmDatabase.getInstance(context).getSavedArticles());
-
         //Fetch latest news from network
         new NetworkRequests().fetchArticlesFromSingleSource(context, new NetworkRequests.SingleSourceFetchListener() {
             @Override
