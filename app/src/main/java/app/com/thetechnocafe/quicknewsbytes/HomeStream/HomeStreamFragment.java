@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -116,6 +117,11 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
     @Override
     public void stopRefreshing() {
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showSnackbarMessage(String message) {
+        Snackbar.make(mSwipeRefreshLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
     private void setUpOrRefreshRecyclerView(List<ArticleModel> list) {

@@ -32,6 +32,11 @@ public class DateFormattingUtils {
      * Convert string to date
      */
     public Date convertToDate(String string) {
+        //Check for errors in string
+        if (string == null || string.equals("")) {
+            return null;
+        }
+
         //Create data formatter
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         try {
@@ -49,6 +54,11 @@ public class DateFormattingUtils {
     public String convertToTimeElapsedString(Context context, String stringDate) {
         //Get date from string
         Date date = convertToDate(stringDate);
+
+        //Check if date is null
+        if (date == null) {
+            return "";
+        }
 
         long timeDifference = new Date().getTime() - date.getTime();
 

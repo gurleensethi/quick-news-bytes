@@ -4,6 +4,7 @@
     <string name="refresh_sources">Refresh Sources</string>
     <string name="main_news_feed">Main News Feed</string>
     <string name="sources">Sources</string>
+    <string name="unable_to_load_source">Unable to fetch news from required source.</string>
     <plurals name="hoursAgo">
         <item quantity="one">%d hour ago</item>
         <item quantity="other">%d hours ago</item>

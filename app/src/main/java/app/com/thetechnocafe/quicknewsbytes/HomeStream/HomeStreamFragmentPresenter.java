@@ -6,6 +6,7 @@ import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Database.DataManager;
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
+import app.com.thetechnocafe.quicknewsbytes.R;
 import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
 
 /**
@@ -44,6 +45,8 @@ public class HomeStreamFragmentPresenter implements HomeStreamFragmentContract.P
     public void onNewsFetched(boolean isSuccessful, List<ArticleModel> articleList) {
         if (isSuccessful) {
             mHomeStreamView.displayNewsList(articleList);
+        } else {
+            mHomeStreamView.showSnackbarMessage(mHomeStreamView.getViewContext().getString(R.string.unable_to_load_source));
         }
 
         mHomeStreamView.stopRefreshing();

@@ -25,5 +25,7 @@ public class HomeStreamFragmentContract {
         void startRefreshing();
 
         void stopRefreshing();
+
+        void showSnackbarMessage(String message);
     }
 }
