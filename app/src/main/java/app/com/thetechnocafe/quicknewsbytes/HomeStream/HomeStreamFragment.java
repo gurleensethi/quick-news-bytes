@@ -120,8 +120,8 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
     }
 
     @Override
-    public void showSnackbarMessage(String message) {
-        Snackbar.make(mSwipeRefreshLayout, message, Snackbar.LENGTH_SHORT).show();
+    public void showSnackbarMessage(int stringResource) {
+        Snackbar.make(mSwipeRefreshLayout, stringResource, Snackbar.LENGTH_SHORT).show();
     }
 
     private void setUpOrRefreshRecyclerView(List<ArticleModel> list) {

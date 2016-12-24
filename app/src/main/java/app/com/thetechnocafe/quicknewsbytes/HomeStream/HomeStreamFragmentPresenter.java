@@ -46,7 +46,7 @@ public class HomeStreamFragmentPresenter implements HomeStreamFragmentContract.P
         if (isSuccessful) {
             mHomeStreamView.displayNewsList(articleList);
         } else {
-            mHomeStreamView.showSnackbarMessage(mHomeStreamView.getViewContext().getString(R.string.unable_to_load_source));
+            mHomeStreamView.showSnackbarMessage(R.string.unable_to_load_source);
         }
 
         mHomeStreamView.stopRefreshing();
