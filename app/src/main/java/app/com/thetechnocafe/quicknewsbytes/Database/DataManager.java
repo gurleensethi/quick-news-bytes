@@ -2,6 +2,7 @@ package app.com.thetechnocafe.quicknewsbytes.Database;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
@@ -100,5 +101,24 @@ public class DataManager {
         List<SourceModel> sourcesList = RealmDatabase.getInstance(context).getAllSources();
 
         listener.onSourcesFetched(sourcesList);
+    }
+
+    //Get all the sources that match a substring
+    public void getSourcesWithSearch(Context context, String searchWord, SourcesFetchListener listener) {
+        String lowerCaseSearchWord = searchWord.toLowerCase();
+
+        //Get list of sources
+        List<SourceModel> sourcesList = RealmDatabase.getInstance(context).getAllSources();
+
+        List<SourceModel> finalList = new ArrayList<>();
+
+        //Filter out sources that match
+        for (SourceModel sourceModel : sourcesList) {
+            if (sourceModel.getName().toLowerCase().contains(lowerCaseSearchWord)) {
+                finalList.add(sourceModel);
+            }
+        }
+
+        listener.onSourcesFetched(finalList);
     }
 }

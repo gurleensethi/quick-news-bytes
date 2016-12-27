@@ -23,6 +23,11 @@ public class HomeStreamActivityPresenter implements HomeStreamActivityContract.P
     }
 
     @Override
+    public void refreshListOnSearch(String searchString) {
+        DataManager.getInstance().getSourcesWithSearch(mMainView.getContext(), searchString, this);
+    }
+
+    @Override
     public void onSourcesFetched(List<SourceModel> sourcesList) {
         mMainView.onSourcesFetched(sourcesList);
     }

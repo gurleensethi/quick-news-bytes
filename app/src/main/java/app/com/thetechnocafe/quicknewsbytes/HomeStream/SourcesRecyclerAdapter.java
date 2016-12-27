@@ -83,4 +83,9 @@ public class SourcesRecyclerAdapter extends RecyclerView.Adapter<SourcesRecycler
             mSourcesEventListener.onSourceItemClicked(mSourcesList.get(mPosition));
         }
     }
+
+    //Change the list
+    public void updateList(List<SourceModel> updatedList) {
+        mSourcesList = updatedList;
+    }
 }

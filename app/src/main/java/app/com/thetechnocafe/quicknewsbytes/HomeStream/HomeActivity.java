@@ -11,10 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,6 +51,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     @BindView(R.id.sources_search_edit_text)
     EditText mSearchEditText;
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
     private SourcesRecyclerAdapter mSourcesRecyclerAdapter;
     private LeftNavigationRecyclerAdapter mLeftNavigationRecyclerAdapter;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -120,6 +124,24 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
                 mDrawerLayout.closeDrawer(GravityCompat.END);
             }
         });
+
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //Change the list of sources
+                mPresenter.refreshListOnSearch(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -162,11 +184,15 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
                     //Clear edit text and remove focus
                     mSearchEditText.setText("");
                     mSearchEditText.clearFocus();
+
+                    //Hide the keyboard
+                    hideKeyboard();
                 }
             });
 
             mSourcesRecyclerView.setAdapter(mSourcesRecyclerAdapter);
         } else {
+            mSourcesRecyclerAdapter.updateList(sourcesList);
             mSourcesRecyclerAdapter.notifyDataSetChanged();
         }
     }
@@ -202,5 +228,10 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     private void addSourceStreamFragment(String sourceID) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, HomeStreamFragment.getInstance(sourceID)).commit();
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(mSearchEditText.getWindowToken(), 0);
     }
 }

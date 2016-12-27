@@ -34,12 +34,12 @@
             android:id="@+id/sources_search_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_search"
             android:hint="@string/search"
+            android:inputType="textShortMessage"
             android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:background="@android:color/transparent"/>
-
+            android:paddingTop="16dp"/>
 
         <View
             android:layout_width="match_parent"

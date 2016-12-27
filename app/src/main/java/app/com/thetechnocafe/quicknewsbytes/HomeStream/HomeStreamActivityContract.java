@@ -19,5 +19,7 @@ public class HomeStreamActivityContract {
 
     public interface Presenter {
         void onStart();
+
+        void refreshListOnSearch(String searchString);
     }
 }
