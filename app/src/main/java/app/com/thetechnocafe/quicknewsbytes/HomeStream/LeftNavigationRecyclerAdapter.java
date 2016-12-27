@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import app.com.thetechnocafe.quicknewsbytes.R;
@@ -50,8 +49,6 @@ public class LeftNavigationRecyclerAdapter extends RecyclerView.Adapter<LeftNavi
 
     //View holder
     class LeftNavigationRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.option_image_view)
-        ImageView mOptionImageView;
         @BindView(R.id.option_text_view)
         TextView mOptionTextView;
         private int mPosition;
@@ -69,18 +66,6 @@ public class LeftNavigationRecyclerAdapter extends RecyclerView.Adapter<LeftNavi
             mPosition = position;
 
             mOptionTextView.setText(mOptions[position]);
-
-            //Set the corresponding image
-            switch (position) {
-                case 0: {
-                    mOptionImageView.setImageResource(R.mipmap.ic_launcher);
-                    break;
-                }
-                case 1: {
-                    mOptionImageView.setImageResource(R.drawable.ic_news_paper_2);
-                    break;
-                }
-            }
         }
 
         @Override

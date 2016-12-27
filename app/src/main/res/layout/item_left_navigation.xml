@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:padding="16dp"
               android:background="@drawable/item_selector"
               android:clickable="true"
               android:gravity="center_vertical"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,13 +15,6 @@
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
-
-        <ImageView
-            android:id="@+id/option_image_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="centerCrop"
-            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/option_text_view"
