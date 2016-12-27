@@ -57,6 +57,9 @@ public class DataManager {
 
     //Send request to fetch all the sources that are saved
     public void fetchArticlesForNewsFeed(final Context context, final NewsFetchListener listener) {
+        //TODO: Remove this from production code
+        new NetworkRequests().fetchSources(context, null);
+
         //Get all the saved sources
         List<SourceModel> mSourceList = RealmDatabase.getInstance(context).getSavedSources();
 

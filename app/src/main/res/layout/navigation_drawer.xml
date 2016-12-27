@@ -4,7 +4,7 @@
               android:layout_width="280dp"
               android:layout_height="match_parent"
               android:layout_gravity="start"
-              android:background="@color/md_grey_200"
+              android:background="@drawable/inner_shadow_right"
               android:gravity="center_horizontal"
               android:orientation="vertical">
 
@@ -15,6 +15,11 @@
         android:text="Quick News Bytes"
         android:textColor="@color/md_black_1000"
         android:textSize="20sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@android:color/darker_gray"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/navigation_recycler_view"

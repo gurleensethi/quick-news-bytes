@@ -121,7 +121,9 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
 
     @Override
     public void showSnackbarMessage(int stringResource) {
-        Snackbar.make(getView(), stringResource, Snackbar.LENGTH_SHORT).show();
+        if (getView() != null) {
+            Snackbar.make(getView(), stringResource, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     private void setUpOrRefreshRecyclerView(List<ArticleModel> list) {
