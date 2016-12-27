@@ -145,7 +145,7 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
             mNewsFeedRecyclerView.setAdapter(mArticlesRecyclerAdapter);
 
             //Set visibility and make animation
-            Animation bottomUpAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
+            Animation bottomUpAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.bottom_up);
             mNewsFeedRecyclerView.startAnimation(bottomUpAnimation);
             mNewsFeedRecyclerView.setVisibility(View.VISIBLE);
         } else {

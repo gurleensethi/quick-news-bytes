@@ -5,6 +5,7 @@
               android:layout_height="match_parent"
               android:layout_gravity="end"
               android:background="@drawable/inner_shadow_left"
+              android:focusableInTouchMode="true"
               android:gravity="center_horizontal"
               android:orientation="vertical">
 
@@ -21,8 +22,24 @@
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
             android:text="@string/main_news_feed"
-            android:textColor="@color/md_black_1000"
+            android:textColor="@color/md_grey_600"
             android:textSize="20sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <EditText
+            android:id="@+id/sources_search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_search"
+            android:hint="@string/search"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:background="@android:color/transparent"/>
+
 
         <View
             android:layout_width="match_parent"

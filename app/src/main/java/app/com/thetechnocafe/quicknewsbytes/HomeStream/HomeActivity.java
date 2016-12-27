@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,8 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     RecyclerView mSourcesRecyclerView;
     @BindView(R.id.navigation_recycler_view)
     RecyclerView mLeftNavigationRecyclerView;
+    @BindView(R.id.sources_search_edit_text)
+    EditText mSearchEditText;
 
     private SourcesRecyclerAdapter mSourcesRecyclerAdapter;
     private LeftNavigationRecyclerAdapter mLeftNavigationRecyclerAdapter;
@@ -155,6 +158,10 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
 
                     //Close the drawer
                     mDrawerLayout.closeDrawer(GravityCompat.END);
+
+                    //Clear edit text and remove focus
+                    mSearchEditText.setText("");
+                    mSearchEditText.clearFocus();
                 }
             });
 
@@ -165,7 +172,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     }
 
     private void setUpLeftNavigationRecyclerView() {
-        if(mLeftNavigationRecyclerAdapter == null) {
+        if (mLeftNavigationRecyclerAdapter == null) {
             //Get the list of options
             String[] options = getResources().getStringArray(R.array.left_navigation);
 
