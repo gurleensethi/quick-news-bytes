@@ -52,6 +52,10 @@ public class SourcesRecyclerAdapter extends RecyclerView.Adapter<SourcesRecycler
         ImageView mSourceImageView;
         @BindView(R.id.source_name_text_view)
         TextView mSourceNameTextView;
+        @BindView(R.id.selected_layer_view)
+        View mSelectedLayerView;
+        @BindView(R.id.selected_layer_image_view)
+        ImageView mSelectedLayerImageView;
         private int mPosition;
 
         SourceViewHolder(View view) {
@@ -71,6 +75,15 @@ public class SourcesRecyclerAdapter extends RecyclerView.Adapter<SourcesRecycler
                     .into(mSourceImageView);
 
             mSourceNameTextView.setText(mSourcesList.get(position).getName());
+
+            //Check if selected then show the selection layer, vice versa
+            if (mSourcesList.get(position).isSaved()) {
+                mSelectedLayerView.setVisibility(View.VISIBLE);
+                mSelectedLayerImageView.setVisibility(View.VISIBLE);
+            } else {
+                mSelectedLayerView.setVisibility(View.GONE);
+                mSelectedLayerImageView.setVisibility(View.GONE);
+            }
         }
 
         @Override
