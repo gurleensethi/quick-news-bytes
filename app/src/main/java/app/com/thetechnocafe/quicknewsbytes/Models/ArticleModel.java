@@ -1,5 +1,8 @@
 package app.com.thetechnocafe.quicknewsbytes.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +13,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by gurleensethi on 18/12/16.
  */
 
-public class ArticleModel extends RealmObject {
+public class ArticleModel extends RealmObject implements Parcelable {
     @Expose
     @SerializedName("author")
     private String mAuthorName;
@@ -37,6 +40,32 @@ public class ArticleModel extends RealmObject {
     private String mPublishedAt;
 
     private String mSourceId;
+
+    public ArticleModel() {
+
+    }
+
+    protected ArticleModel(Parcel in) {
+        mAuthorName = in.readString();
+        mTitle = in.readString();
+        mDescription = in.readString();
+        mUrl = in.readString();
+        mUrlToImage = in.readString();
+        mPublishedAt = in.readString();
+        mSourceId = in.readString();
+    }
+
+    public static final Creator<ArticleModel> CREATOR = new Creator<ArticleModel>() {
+        @Override
+        public ArticleModel createFromParcel(Parcel in) {
+            return new ArticleModel(in);
+        }
+
+        @Override
+        public ArticleModel[] newArray(int size) {
+            return new ArticleModel[size];
+        }
+    };
 
     public String getAuthorName() {
         return mAuthorName;
@@ -92,5 +121,21 @@ public class ArticleModel extends RealmObject {
 
     public void setSourceId(String sourceId) {
         mSourceId = sourceId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mAuthorName);
+        parcel.writeString(mTitle);
+        parcel.writeString(mDescription);
+        parcel.writeString(mUrl);
+        parcel.writeString(mUrlToImage);
+        parcel.writeString(mPublishedAt);
+        parcel.writeString(mSourceId);
     }
 }

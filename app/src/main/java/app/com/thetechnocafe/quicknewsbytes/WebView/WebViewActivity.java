@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +27,8 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
     ProgressBar mProgressBar;
 
     private WebViewContract.Presenter mWebViewPresenter;
-    public static final String WEB_VIEW_URL_EXTRA = "webviewurlextra";
+    public static final String WEB_VIEW_PARCELABLE_EXTRA = "webviewparcelableextra";
+    private static ArticleModel ARTICLE_MODEL = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
         ButterKnife.bind(this);
 
         mWebViewPresenter = new WebViewPresenter(this);
+
+        ARTICLE_MODEL = getIntent().getParcelableExtra(WEB_VIEW_PARCELABLE_EXTRA);
 
         //Set up toolbar
         setSupportActionBar(mToolbar);
@@ -51,6 +55,7 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
 
     private void configureWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setDisplayZoomControls(true);
         mWebView.setWebViewClient(new CustomWebViewClient());
 
         mProgressBar.setMax(100);
@@ -94,8 +99,10 @@ public class WebViewActivity extends AppCompatActivity implements WebViewContrac
     @Override
     public void loadURLInWebView() {
         //Get url from intent and load into the web view
-        String URL = getIntent().getStringExtra(WEB_VIEW_URL_EXTRA);
-        mWebView.loadUrl(URL);
+        mWebView.loadUrl(ARTICLE_MODEL.getUrl());
+
+        //Set Title and subtitle
+        mToolbar.setTitle(ARTICLE_MODEL.getTitle());
     }
 
     /**
