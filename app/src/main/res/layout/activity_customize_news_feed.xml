@@ -33,6 +33,7 @@
             android:drawableLeft="@drawable/ic_search"
             android:hint="@string/search"
             android:inputType="textShortMessage"
+            android:imeOptions="actionDone"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"/>
 
