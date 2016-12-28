@@ -2,12 +2,12 @@ package app.com.thetechnocafe.quicknewsbytes.CustomizeNewsFeed;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public class CustomizeNewsFeedActivity extends AppCompatActivity implements CustomizeNewFeedContract.View {
 
     @BindView(R.id.save_button)
-    Button mSaveButton;
+    FloatingActionButton mSaveButton;
     @BindView(R.id.sources_recycler_view)
     RecyclerView mSourcesRecyclerView;
     @BindView(R.id.toolbar)

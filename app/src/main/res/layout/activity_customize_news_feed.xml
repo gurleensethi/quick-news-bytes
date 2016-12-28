@@ -6,6 +6,8 @@
     android:id="@+id/activity_customize_news_feed"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_grey_200"
+    android:focusableInTouchMode="true"
     tools:context="app.com.thetechnocafe.quicknewsbytes.CustomizeNewsFeed.CustomizeNewsFeedActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -17,14 +19,27 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:title="@string/customize_news_feed"
             app:titleTextColor="@color/md_black_1000">
 
         </android.support.v7.widget.Toolbar>
 
+        <EditText
+            android:id="@+id/sources_search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_search"
+            android:hint="@string/search"
+            android:inputType="textShortMessage"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"/>
+
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -38,17 +53,18 @@
 
         </android.support.v7.widget.RecyclerView>
 
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/md_green_600"
-            android:text="@string/save"
-            android:textColor="@color/md_white_1000"
-            android:textSize="20sp"
-            android:foreground="?attr/selectableItemBackground"/>
-
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_tick"
+        app:backgroundTint="@color/md_green_600"
+        app:fabSize="normal"
+        app:layout_anchor="@id/linear_layout"
+        app:layout_anchorGravity="bottom|right"/>
 
 </android.support.design.widget.CoordinatorLayout>
