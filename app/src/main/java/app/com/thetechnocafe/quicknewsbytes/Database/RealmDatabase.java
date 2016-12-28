@@ -5,7 +5,9 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
@@ -184,6 +186,35 @@ public class RealmDatabase {
             public void execute(Realm realm) {
                 SourceModel source = realm.where(SourceModel.class).equalTo(Constants.REALM_SOURCE_ID, sourceID).findFirst();
                 source.setSaved(shouldSave);
+            }
+        });
+    }
+
+    /**
+     * Delete all the articles related to sources that are not saved
+     */
+    public void deleteUnrelatedArticlesFromSources() {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                //Get all saved sources
+                List<SourceModel> sourcesList = realm.where(SourceModel.class).equalTo(Constants.REALM_SOURCE_SAVED, true).findAll();
+
+                //Put all the sourceIDs in a set
+                Set<String> sourceIDs = new HashSet<String>();
+                for (SourceModel model : sourcesList) {
+                    sourceIDs.add(model.getID());
+                }
+
+                //Get list of all saved articles
+                List<ArticleModel> articlesList = realm.where(ArticleModel.class).findAll();
+
+                //Remove all the articles whose sourceID is not in the set
+                for (ArticleModel model : articlesList) {
+                    if (!sourceIDs.contains(model.getSourceId())) {
+                        model.deleteFromRealm();
+                    }
+                }
             }
         });
     }

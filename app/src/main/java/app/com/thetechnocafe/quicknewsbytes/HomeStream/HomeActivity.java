@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     private LeftNavigationRecyclerAdapter mLeftNavigationRecyclerAdapter;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private HomeStreamActivityContract.Presenter mPresenter;
+    private static final int CUSTOMIZE_FEED_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,7 +214,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
                             mDrawerLayout.closeDrawer(GravityCompat.START);
 
                             Intent intent = new Intent(HomeActivity.this, CustomizeNewsFeedActivity.class);
-                            startActivity(intent);
+                            startActivityForResult(intent, CUSTOMIZE_FEED_REQUEST_CODE);
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             break;
                         }
@@ -246,5 +247,15 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     private void hideKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(mSearchEditText.getWindowToken(), 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CUSTOMIZE_FEED_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                addSourceStreamFragment(Constants.HOME_STREAM);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package app.com.thetechnocafe.quicknewsbytes.CustomizeNewsFeed;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -106,6 +107,9 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
                 public void onSourceItemSelected(int position, SourceModel model) {
                     mLastSelectedPosition = position;
                     mPresenter.onSourceItemSelected(model);
+
+                    //If anything changes in source selection, notify for change to previous activity
+                    setResult(Activity.RESULT_OK);
                 }
             });
             mSourcesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), RECYCLER_VIEW_GRID_SIZE));
@@ -120,5 +124,11 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
                 mSourcesRecyclerAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.onPause();
     }
 }

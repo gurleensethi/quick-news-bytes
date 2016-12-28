@@ -58,6 +58,9 @@ public class DataManager {
 
     //Send request to fetch all the sources that are saved
     public void fetchArticlesForNewsFeed(final Context context, final NewsFetchListener listener) {
+        //Send articles that are offline
+        listener.onOfflineNewsFetched(RealmDatabase.getInstance(context).getSavedArticles());
+
         //TODO: Remove this from production code
         new NetworkRequests().fetchSources(context, null);
 
@@ -125,5 +128,10 @@ public class DataManager {
     //Change the state of the source, if selected change to unselected and vice versa
     public void changeSourceSelection(Context context, SourceModel model) {
         RealmDatabase.getInstance(context).changeSourceSelection(model.getID(), !model.isSaved());
+    }
+
+    //Clear all the articles that belong to unselected sources
+    public void deleteArticlesFromUnsavedSources(Context context) {
+        RealmDatabase.getInstance(context).deleteUnrelatedArticlesFromSources();
     }
 }

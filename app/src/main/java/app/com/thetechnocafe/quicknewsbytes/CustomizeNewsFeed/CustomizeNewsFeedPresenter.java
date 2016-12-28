@@ -34,6 +34,11 @@ public class CustomizeNewsFeedPresenter implements CustomizeNewFeedContract.Pres
     }
 
     @Override
+    public void onPause() {
+        DataManager.getInstance().deleteArticlesFromUnsavedSources(mMainView.getContext());
+    }
+
+    @Override
     public void onSourcesFetched(List<SourceModel> sourcesList) {
         mMainView.displaySourcesList(sourcesList);
     }
