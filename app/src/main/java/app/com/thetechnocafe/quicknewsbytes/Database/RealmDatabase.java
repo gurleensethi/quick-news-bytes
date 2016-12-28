@@ -173,5 +173,19 @@ public class RealmDatabase {
 
         return mSourcesList;
     }
+
+    /**
+     * Change the selection state of a source,
+     * whether to show in news feed or not
+     */
+    public void changeSourceSelection(final String sourceID, final boolean shouldSave) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                SourceModel source = realm.where(SourceModel.class).equalTo(Constants.REALM_SOURCE_ID, sourceID).findFirst();
+                source.setSaved(shouldSave);
+            }
+        });
+    }
 }
 

@@ -22,13 +22,19 @@ import butterknife.ButterKnife;
  */
 
 public class SourcesRecyclerAdapter extends RecyclerView.Adapter<SourcesRecyclerAdapter.SourceViewHolder> {
+    //Interface for callbacks
+    public interface OnSourcesItemSelectedListener {
+        void onSourceItemSelected(int position, SourceModel model);
+    }
 
     private List<SourceModel> mSourcesList;
     private Context mContext;
+    private OnSourcesItemSelectedListener mOnSourcesItemSelectedListener;
 
-    public SourcesRecyclerAdapter(Context context, List<SourceModel> list) {
+    public SourcesRecyclerAdapter(Context context, List<SourceModel> list, OnSourcesItemSelectedListener listener) {
         mContext = context;
         mSourcesList = list;
+        mOnSourcesItemSelectedListener = listener;
     }
 
     @Override
@@ -76,19 +82,23 @@ public class SourcesRecyclerAdapter extends RecyclerView.Adapter<SourcesRecycler
 
             mSourceNameTextView.setText(mSourcesList.get(position).getName());
 
+            toggleSelectionState();
+        }
+
+        @Override
+        public void onClick(View view) {
+            mOnSourcesItemSelectedListener.onSourceItemSelected(mPosition, mSourcesList.get(mPosition));
+        }
+
+        private void toggleSelectionState() {
             //Check if selected then show the selection layer, vice versa
-            if (mSourcesList.get(position).isSaved()) {
+            if (mSourcesList.get(mPosition).isSaved()) {
                 mSelectedLayerView.setVisibility(View.VISIBLE);
                 mSelectedLayerImageView.setVisibility(View.VISIBLE);
             } else {
                 mSelectedLayerView.setVisibility(View.GONE);
                 mSelectedLayerImageView.setVisibility(View.GONE);
             }
-        }
-
-        @Override
-        public void onClick(View view) {
-
         }
     }
 

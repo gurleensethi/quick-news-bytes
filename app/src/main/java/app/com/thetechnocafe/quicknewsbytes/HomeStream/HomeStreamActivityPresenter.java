@@ -19,7 +19,7 @@ public class HomeStreamActivityPresenter implements HomeStreamActivityContract.P
 
     @Override
     public void onStart() {
-        DataManager.getInstance().getAllStoredSources(mMainView.getContext(), this);
+        DataManager.getInstance().getAllSources(mMainView.getContext(), this);
     }
 
     @Override

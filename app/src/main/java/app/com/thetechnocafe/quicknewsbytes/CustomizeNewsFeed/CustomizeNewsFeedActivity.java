@@ -33,6 +33,7 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
     private CustomizeNewFeedContract.Presenter mPresenter;
     private SourcesRecyclerAdapter mSourcesRecyclerAdapter;
     private static int RECYCLER_VIEW_GRID_SIZE = 2;
+    private int mLastSelectedPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +101,24 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
 
     private void setUpOrRefreshRecyclerView(List<SourceModel> list) {
         if (mSourcesRecyclerAdapter == null) {
-            mSourcesRecyclerAdapter = new SourcesRecyclerAdapter(getContext(), list);
+            mSourcesRecyclerAdapter = new SourcesRecyclerAdapter(getContext(), list, new SourcesRecyclerAdapter.OnSourcesItemSelectedListener() {
+                @Override
+                public void onSourceItemSelected(int position, SourceModel model) {
+                    mLastSelectedPosition = position;
+                    mPresenter.onSourceItemSelected(model);
+                }
+            });
             mSourcesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), RECYCLER_VIEW_GRID_SIZE));
             mSourcesRecyclerView.setAdapter(mSourcesRecyclerAdapter);
         } else {
             mSourcesRecyclerAdapter.updateList(list);
-            mSourcesRecyclerAdapter.notifyDataSetChanged();
+
+            //Check if the item was clicked or list obtained from presenter
+            if (mLastSelectedPosition >= 0) {
+                mSourcesRecyclerAdapter.notifyItemChanged(mLastSelectedPosition);
+            } else {
+                mSourcesRecyclerAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

@@ -96,7 +96,7 @@ public class DataManager {
     }
 
     //Fetch Offline Sources
-    public void getAllStoredSources(final Context context, final SourcesFetchListener listener) {
+    public void getAllSources(final Context context, final SourcesFetchListener listener) {
         //Get all source from realm database
         List<SourceModel> sourcesList = RealmDatabase.getInstance(context).getAllSources();
 
@@ -120,5 +120,10 @@ public class DataManager {
         }
 
         listener.onSourcesFetched(finalList);
+    }
+
+    //Change the state of the source, if selected change to unselected and vice versa
+    public void changeSourceSelection(Context context, SourceModel model) {
+        RealmDatabase.getInstance(context).changeSourceSelection(model.getID(), !model.isSaved());
     }
 }

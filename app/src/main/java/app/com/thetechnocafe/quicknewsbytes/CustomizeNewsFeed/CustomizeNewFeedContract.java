@@ -21,5 +21,7 @@ public class CustomizeNewFeedContract {
         void onStart();
 
         void refreshListOnSearch(String searchString);
+
+        void onSourceItemSelected(SourceModel source);
     }
 }

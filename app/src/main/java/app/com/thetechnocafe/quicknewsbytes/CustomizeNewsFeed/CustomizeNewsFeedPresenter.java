@@ -19,12 +19,18 @@ public class CustomizeNewsFeedPresenter implements CustomizeNewFeedContract.Pres
 
     @Override
     public void onStart() {
-        DataManager.getInstance().getAllStoredSources(mMainView.getContext(), this);
+        DataManager.getInstance().getAllSources(mMainView.getContext(), this);
     }
 
     @Override
     public void refreshListOnSearch(String searchString) {
         DataManager.getInstance().getSourcesWithSearch(mMainView.getContext(), searchString, this);
+    }
+
+    @Override
+    public void onSourceItemSelected(SourceModel source) {
+        DataManager.getInstance().changeSourceSelection(mMainView.getContext(), source);
+        DataManager.getInstance().getAllSources(mMainView.getContext(), this);
     }
 
     @Override
