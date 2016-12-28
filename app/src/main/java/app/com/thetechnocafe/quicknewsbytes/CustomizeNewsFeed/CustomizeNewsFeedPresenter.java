@@ -28,9 +28,9 @@ public class CustomizeNewsFeedPresenter implements CustomizeNewFeedContract.Pres
     }
 
     @Override
-    public void onSourceItemSelected(SourceModel source) {
+    public void onSourceItemSelected(SourceModel source, String searchWord) {
         DataManager.getInstance().changeSourceSelection(mMainView.getContext(), source);
-        DataManager.getInstance().getAllSources(mMainView.getContext(), this);
+        DataManager.getInstance().getSourcesWithSearch(mMainView.getContext(), searchWord, this);
     }
 
     @Override

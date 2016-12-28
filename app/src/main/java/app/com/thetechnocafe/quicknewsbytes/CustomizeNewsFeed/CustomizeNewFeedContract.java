@@ -22,7 +22,7 @@ public class CustomizeNewFeedContract {
 
         void refreshListOnSearch(String searchString);
 
-        void onSourceItemSelected(SourceModel source);
+        void onSourceItemSelected(SourceModel source, String searchWord);
 
         void onPause();
     }

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    android:background="@color/md_white_1000"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:gravity="center"
@@ -19,15 +20,16 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/md_white_1000">
 
             <ImageView
                 android:id="@+id/source_image_view"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
+                android:layout_gravity="center"
                 android:padding="8dp"
-                android:src="@mipmap/ic_launcher"
-                android:layout_gravity="center"/>
+                android:src="@mipmap/ic_launcher"/>
 
             <View
                 android:id="@+id/selected_layer_view"
@@ -59,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="The Verge"
+                android:textColor="@color/md_grey_600"
                 android:textSize="12sp"/>
 
         </LinearLayout>

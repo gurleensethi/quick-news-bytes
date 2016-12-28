@@ -106,7 +106,7 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
                 @Override
                 public void onSourceItemSelected(int position, SourceModel model) {
                     mLastSelectedPosition = position;
-                    mPresenter.onSourceItemSelected(model);
+                    mPresenter.onSourceItemSelected(model, mSearchEditText.getText().toString());
 
                     //If anything changes in source selection, notify for change to previous activity
                     setResult(Activity.RESULT_OK);
@@ -120,6 +120,11 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
             //Check if the item was clicked or list obtained from presenter
             if (mLastSelectedPosition >= 0) {
                 mSourcesRecyclerAdapter.notifyItemChanged(mLastSelectedPosition);
+
+                //Reset value back to -1 so that next time if the search is initiated
+                //execution does't enters back into this branch because we would want to call notifyDataSetChanged()
+                //due to change in the complete list
+                mLastSelectedPosition = -1;
             } else {
                 mSourcesRecyclerAdapter.notifyDataSetChanged();
             }
