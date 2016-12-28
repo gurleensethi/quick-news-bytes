@@ -3,8 +3,6 @@ package app.com.thetechnocafe.quicknewsbytes.Database;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +10,6 @@ import java.util.Set;
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
-import app.com.thetechnocafe.quicknewsbytes.Utils.DateFormattingUtils;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -72,21 +69,7 @@ public class RealmDatabase {
 
         mArticlesList.addAll(realmResults);
 
-        Collections.sort(mArticlesList, new Comparator<ArticleModel>() {
-            @Override
-            public int compare(ArticleModel model, ArticleModel t1) {
-                long dateModel = DateFormattingUtils.getInstance().convertToDate(model.getPublishedAt()).getTime();
-                long dateT1 = DateFormattingUtils.getInstance().convertToDate(t1.getPublishedAt()).getTime();
 
-                if (dateModel < dateT1) {
-                    return 1;
-                } else if (dateModel > dateT1) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        });
         mRealm.commitTransaction();
 
         return mArticlesList;
