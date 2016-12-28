@@ -1,6 +1,7 @@
 package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import app.com.thetechnocafe.quicknewsbytes.CustomizeNewsFeed.CustomizeNewsFeedActivity;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
@@ -205,7 +207,18 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
             mLeftNavigationRecyclerAdapter = new LeftNavigationRecyclerAdapter(getContext(), options, new LeftNavigationRecyclerAdapter.OnOptionItemSelectedListener() {
                 @Override
                 public void onOptionClicked(String string) {
+                    switch (string) {
+                        case "Customize News Feed": {
+                            //Close left drawer
+                            mDrawerLayout.closeDrawer(GravityCompat.START);
 
+                            Intent intent = new Intent(HomeActivity.this, CustomizeNewsFeedActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            break;
+                        }
+
+                    }
                 }
             });
 
