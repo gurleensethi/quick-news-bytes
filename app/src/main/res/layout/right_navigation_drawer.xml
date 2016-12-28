@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="280dp"
+              android:layout_width="240dp"
               android:layout_height="match_parent"
               android:layout_gravity="end"
               android:background="@drawable/inner_shadow_left"
@@ -38,8 +38,8 @@
             android:drawableLeft="@drawable/ic_search"
             android:hint="@string/search"
             android:inputType="textShortMessage"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"/>
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"/>
 
         <View
             android:layout_width="match_parent"
