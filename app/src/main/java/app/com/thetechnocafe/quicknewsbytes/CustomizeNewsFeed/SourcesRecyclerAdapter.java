@@ -78,4 +78,8 @@ public class SourcesRecyclerAdapter extends RecyclerView.Adapter<SourcesRecycler
 
         }
     }
+
+    public void updateList(List<SourceModel> list) {
+        mSourcesList = list;
+    }
 }

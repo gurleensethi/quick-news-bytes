@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -24,6 +27,8 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
     RecyclerView mSourcesRecyclerView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.sources_search_edit_text)
+    EditText mSearchEditText;
 
     private CustomizeNewFeedContract.Presenter mPresenter;
     private SourcesRecyclerAdapter mSourcesRecyclerAdapter;
@@ -41,6 +46,27 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
         //Set up toolbar
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setEventListeners();
+    }
+
+    private void setEventListeners() {
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mPresenter.refreshListOnSearch(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -78,6 +104,7 @@ public class CustomizeNewsFeedActivity extends AppCompatActivity implements Cust
             mSourcesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), RECYCLER_VIEW_GRID_SIZE));
             mSourcesRecyclerView.setAdapter(mSourcesRecyclerAdapter);
         } else {
+            mSourcesRecyclerAdapter.updateList(list);
             mSourcesRecyclerAdapter.notifyDataSetChanged();
         }
     }

@@ -19,5 +19,7 @@ public class CustomizeNewFeedContract {
 
     public interface Presenter {
         void onStart();
+
+        void refreshListOnSearch(String searchString);
     }
 }
