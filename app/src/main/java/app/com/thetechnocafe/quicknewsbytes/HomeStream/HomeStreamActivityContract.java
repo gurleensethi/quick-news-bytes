@@ -15,11 +15,17 @@ public class HomeStreamActivityContract {
         void onSourcesFetched(List<SourceModel> sourcesList);
 
         Context getContext();
+
+        void loadMainHomeStream();
+
+        void loadSourceHomeStream(String sourceID);
     }
 
     public interface Presenter {
         void onStart();
 
         void refreshListOnSearch(String searchString);
+
+        void loadFragmentInContainer(String sourceID);
     }
 }

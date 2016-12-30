@@ -26,6 +26,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.CustomizeNewsFeed.CustomizeNewsFeedActivity;
+import app.com.thetechnocafe.quicknewsbytes.MainHomeStream.MainHomeStreamFragment;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import app.com.thetechnocafe.quicknewsbytes.SourceNewsStream.SourceNewsStreamFragment;
@@ -104,7 +105,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         //Configure recycler view
         mSourcesRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        addSourceStreamFragment(Constants.HOME_STREAM);
+        mPresenter.loadFragmentInContainer(Constants.MAIN_HOME_STREAM);
         setUpOnClickListeners();
         setUpLeftNavigationRecyclerView();
     }
@@ -119,7 +120,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         mNewsFeedTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addSourceStreamFragment(Constants.HOME_STREAM);
+                mPresenter.loadFragmentInContainer(Constants.MAIN_HOME_STREAM);
 
                 //Change toolbar title
                 mToolbar.setTitle(getString(R.string.news_feed));
@@ -177,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
                 @Override
                 public void onSourceItemClicked(SourceModel item) {
                     //Replace fragment
-                    addSourceStreamFragment(item.getID());
+                    mPresenter.loadFragmentInContainer(item.getID());
 
                     //Change toolbar title
                     mToolbar.setTitle(item.getName());
@@ -239,8 +240,14 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         return getApplicationContext();
     }
 
-    //Add particular source stream
-    private void addSourceStreamFragment(String sourceID) {
+    @Override
+    public void loadMainHomeStream() {
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, MainHomeStreamFragment.getInstance()).commit();
+    }
+
+    @Override
+    public void loadSourceHomeStream(String sourceID) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, SourceNewsStreamFragment.getInstance(sourceID)).commit();
     }
@@ -255,7 +262,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CUSTOMIZE_FEED_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                addSourceStreamFragment(Constants.HOME_STREAM);
+                mPresenter.loadFragmentInContainer(Constants.MAIN_HOME_STREAM);
             }
         }
     }

@@ -28,7 +28,7 @@ public class SourceNewsStreamPresenter implements SourceNewsStreamContract.Prese
 
     @Override
     public void refreshNews(String sourceID) {
-        if (sourceID.equals(Constants.HOME_STREAM)) {
+        if (sourceID.equals(Constants.MAIN_HOME_STREAM)) {
             DataManager.getInstance().fetchArticlesForNewsFeed(mHomeStreamView.getViewContext(), this);
         } else {
             DataManager.getInstance().fetchLatestNewsBySource(mHomeStreamView.getViewContext(), sourceID, this);
