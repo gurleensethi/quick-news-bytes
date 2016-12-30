@@ -201,5 +201,22 @@ public class RealmDatabase {
             }
         });
     }
+
+    /**
+     * Get all the saved articles from a single source
+     */
+    public List<ArticleModel> getSavedArticlesFromSource(String sourceID) {
+        List<ArticleModel> mArticlesList = new ArrayList<>();
+
+        //Get the list from database
+        mRealm.beginTransaction();
+        RealmResults realmResults = mRealm.where(ArticleModel.class).equalTo(Constants.REALM_ARTICLE_SOURCE_ID, sourceID).findAll();
+
+        mArticlesList.addAll(realmResults);
+
+        mRealm.commitTransaction();
+
+        return mArticlesList;
+    }
 }
 

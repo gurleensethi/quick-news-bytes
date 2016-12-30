@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.CustomizeNewsFeed.CustomizeNewsFeedActivity;
 import app.com.thetechnocafe.quicknewsbytes.MainHomeStream.MainHomeStreamFragment;
+import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import app.com.thetechnocafe.quicknewsbytes.SourceNewsStream.SourceNewsStreamFragment;
@@ -54,6 +56,8 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     RecyclerView mLeftNavigationRecyclerView;
     @BindView(R.id.sources_search_edit_text)
     EditText mSearchEditText;
+    @BindView(R.id.articles_view_pager)
+    ViewPager mArticlesViewPager;
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private SourcesRecyclerAdapter mSourcesRecyclerAdapter;
@@ -250,6 +254,12 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     public void loadSourceHomeStream(String sourceID) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, SourceNewsStreamFragment.getInstance(sourceID)).commit();
+    }
+
+    @Override
+    public void setUpArticleViewPager(List<ArticleModel> articlesList) {
+        ArticlesFragmentPagerAdapter adapter = new ArticlesFragmentPagerAdapter(getSupportFragmentManager(), articlesList);
+        mArticlesViewPager.setAdapter(adapter);
     }
 
     private void hideKeyboard() {

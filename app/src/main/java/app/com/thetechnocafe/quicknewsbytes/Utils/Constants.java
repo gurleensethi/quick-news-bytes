@@ -25,4 +25,6 @@ public class Constants {
     public static final String REALM_SOURCE_SAVED = "mSaved";
 
     public static final String MAIN_HOME_STREAM = "homestream";
+
+    public static final int ARTICLES_FROM_SINGLE_SOURCE = 2;
 }

@@ -56,21 +56,22 @@ public class DataManager {
 
     //Send request to fetch all the sources that are saved
     public void fetchArticlesForNewsFeed(final Context context, final NewsFetchListener listener) {
-        //Send articles that are offline
-        listener.onOfflineNewsFetched(RealmDatabase.getInstance(context).getSavedArticles());
+        //Send offline list
+        sendListOfArticles(context, listener);
 
         //Get all the saved sources
         List<SourceModel> mSourceList = RealmDatabase.getInstance(context).getSavedSources();
 
         //Iterate and get all sources
-        for (SourceModel model : mSourceList) {
+        /*for (SourceModel model : mSourceList) {
             new NetworkRequests().fetchNewsFromSource(context, new NetworkRequests.SourceNewsListener() {
                 @Override
                 public void onNewsFetched(boolean isSuccessful) {
-                    listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(context).getSavedArticles());
+                    //listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(context).getSavedArticles());
                 }
             }, model.getID());
         }
+        */
     }
 
     //Get all the saved sources
@@ -134,4 +135,26 @@ public class DataManager {
     public void deleteArticlesFromUnsavedSources(Context context) {
         RealmDatabase.getInstance(context).deleteUnrelatedArticlesFromSources();
     }
+
+    //Send a list of articles with part of articles from every source
+    private void sendListOfArticles(Context context, NewsFetchListener listener) {
+        //Create list the will be sent
+        List<ArticleModel> articlesList = new ArrayList<>();
+
+        //Get all the saved sources
+        List<SourceModel> mSourceList = RealmDatabase.getInstance(context).getSavedSources();
+
+        //Extract two news from every source
+        for (int count = 0; count < mSourceList.size(); count++) {
+            List<ArticleModel> articlesFromSingleSource = RealmDatabase.getInstance(context).
+                    getSavedArticlesFromSource(mSourceList.get(count).getID());
+
+            if (articlesFromSingleSource.size() > 2) {
+                articlesList.addAll(articlesFromSingleSource.subList(0, 2));
+            }
+        }
+
+        listener.onOfflineNewsFetched(articlesList);
+    }
+
 }
