@@ -28,6 +28,7 @@ import java.util.List;
 import app.com.thetechnocafe.quicknewsbytes.CustomizeNewsFeed.CustomizeNewsFeedActivity;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
+import app.com.thetechnocafe.quicknewsbytes.SourceNewsStream.SourceNewsStreamFragment;
 import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -241,7 +242,7 @@ public class HomeActivity extends AppCompatActivity implements HomeStreamActivit
     //Add particular source stream
     private void addSourceStreamFragment(String sourceID) {
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, HomeStreamFragment.getInstance(sourceID)).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, SourceNewsStreamFragment.getInstance(sourceID)).commit();
     }
 
     private void hideKeyboard() {

@@ -1,4 +1,4 @@
-package app.com.thetechnocafe.quicknewsbytes.HomeStream;
+package app.com.thetechnocafe.quicknewsbytes.SourceNewsStream;
 
 import android.content.Context;
 
@@ -10,7 +10,7 @@ import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
  * Created by gurleensethi on 18/12/16.
  */
 
-public class HomeStreamFragmentContract {
+public class SourceNewsStreamContract {
     public interface Presenter {
         void start();
 

@@ -1,4 +1,4 @@
-package app.com.thetechnocafe.quicknewsbytes.HomeStream;
+package app.com.thetechnocafe.quicknewsbytes.SourceNewsStream;
 
 import android.content.Context;
 
@@ -13,11 +13,11 @@ import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
  * Created by gurleensethi on 18/12/16.
  */
 
-public class HomeStreamFragmentPresenter implements HomeStreamFragmentContract.Presenter, DataManager.NewsFetchListener {
+public class SourceNewsStreamPresenter implements SourceNewsStreamContract.Presenter, DataManager.NewsFetchListener {
 
-    private HomeStreamFragmentContract.View mHomeStreamView;
+    private SourceNewsStreamContract.View mHomeStreamView;
 
-    public HomeStreamFragmentPresenter(HomeStreamFragmentContract.View view) {
+    public SourceNewsStreamPresenter(SourceNewsStreamContract.View view) {
         mHomeStreamView = view;
     }
 

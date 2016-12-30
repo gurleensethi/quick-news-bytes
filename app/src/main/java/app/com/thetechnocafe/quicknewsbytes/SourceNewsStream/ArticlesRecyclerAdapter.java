@@ -1,4 +1,4 @@
-package app.com.thetechnocafe.quicknewsbytes.HomeStream;
+package app.com.thetechnocafe.quicknewsbytes.SourceNewsStream;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

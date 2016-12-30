@@ -1,4 +1,4 @@
-package app.com.thetechnocafe.quicknewsbytes.HomeStream;
+package app.com.thetechnocafe.quicknewsbytes.SourceNewsStream;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,14 +30,14 @@ import butterknife.ButterKnife;
  * Created by gurleensethi on 18/12/16.
  */
 
-public class HomeStreamFragment extends Fragment implements HomeStreamFragmentContract.View {
+public class SourceNewsStreamFragment extends Fragment implements SourceNewsStreamContract.View {
 
     @BindView(R.id.news_feed_recycler_view)
     RecyclerView mNewsFeedRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private HomeStreamFragmentContract.Presenter mPresenter;
+    private SourceNewsStreamContract.Presenter mPresenter;
     private ArticlesRecyclerAdapter mArticlesRecyclerAdapter;
     private static final String ARG_SOURCE_ID = "sourceid";
 
@@ -47,7 +47,7 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
         args.putString(ARG_SOURCE_ID, sourceID);
 
         //Create fragment and set arguments
-        Fragment fragment = new HomeStreamFragment();
+        Fragment fragment = new SourceNewsStreamFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -68,7 +68,7 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
         //Bind Butterknife
         ButterKnife.bind(this, view);
 
-        mPresenter = new HomeStreamFragmentPresenter(this);
+        mPresenter = new SourceNewsStreamPresenter(this);
 
         //Add colors to swipe refresh layout
         mSwipeRefreshLayout.setColorSchemeColors(
@@ -139,7 +139,7 @@ public class HomeStreamFragment extends Fragment implements HomeStreamFragmentCo
 
                 @Override
                 public Context getContext() {
-                    return HomeStreamFragment.this.getContext();
+                    return SourceNewsStreamFragment.this.getContext();
                 }
             }, list);
             mNewsFeedRecyclerView.setAdapter(mArticlesRecyclerAdapter);
