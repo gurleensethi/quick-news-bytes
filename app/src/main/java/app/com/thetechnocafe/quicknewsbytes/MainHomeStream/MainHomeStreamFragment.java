@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,5 +60,11 @@ public class MainHomeStreamFragment extends Fragment implements MainHomStreamCon
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDestroy();
+    }
+
+    @Override
+    public void setUpViewPager(List<SourceModel> sourcesList) {
+        FragmentPagerAdapter fragmentPagerAdapter = new SourceFragmentPagerAdapter(getFragmentManager(), sourcesList);
+        mSourcesViewPager.setAdapter(fragmentPagerAdapter);
     }
 }

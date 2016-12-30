@@ -44,8 +44,6 @@ public class DataManager {
 
     //Send request to fetch latest news
     public void fetchLatestNewsBySource(final Context context, String sourceID, final NewsFetchListener listener) {
-        //TODO: Remove this from production code
-        new NetworkRequests().fetchSources(context, null);
 
         //Fetch latest news from network
         new NetworkRequests().fetchArticlesFromSingleSource(context, new NetworkRequests.SingleSourceFetchListener() {
@@ -61,9 +59,6 @@ public class DataManager {
         //Send articles that are offline
         listener.onOfflineNewsFetched(RealmDatabase.getInstance(context).getSavedArticles());
 
-        //TODO: Remove this from production code
-        new NetworkRequests().fetchSources(context, null);
-
         //Get all the saved sources
         List<SourceModel> mSourceList = RealmDatabase.getInstance(context).getSavedSources();
 
@@ -76,6 +71,11 @@ public class DataManager {
                 }
             }, model.getID());
         }
+    }
+
+    //Get all the saved sources
+    public void getAllUserSavedSource(Context context, SourcesFetchListener listener) {
+        listener.onSourcesFetched(RealmDatabase.getInstance(context).getSavedSources());
     }
 
     //Insert new Article in Realm
