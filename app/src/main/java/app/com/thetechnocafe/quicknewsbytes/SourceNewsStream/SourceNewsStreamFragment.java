@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,11 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    private static final String TAG = SourceNewsStreamFragment.class.getSimpleName();
     private SourceNewsStreamContract.Presenter mPresenter;
     private ArticlesRecyclerAdapter mArticlesRecyclerAdapter;
     private static final String ARG_SOURCE_ID = "sourceid";
+    private static List<ArticleModel> mArticlesList;
 
     public static Fragment getInstance(String sourceID) {
         //Create arguments
@@ -58,6 +61,7 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
         super.onResume();
         mPresenter.start();
         mPresenter.refreshNews(getArguments().getString(ARG_SOURCE_ID));
+        Log.d(TAG + "/" + getArguments().getString(ARG_SOURCE_ID), "Resuming fragment");
     }
 
     @Nullable
@@ -127,6 +131,8 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
     }
 
     private void setUpOrRefreshRecyclerView(List<ArticleModel> list) {
+        mArticlesList = list;
+        Log.d(TAG, "List size : " + mArticlesList.size());
         if (mArticlesRecyclerAdapter == null) {
             mArticlesRecyclerAdapter = new ArticlesRecyclerAdapter(new ArticlesRecyclerAdapter.ArticleEventListener() {
                 @Override
@@ -141,7 +147,7 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
                 public Context getContext() {
                     return SourceNewsStreamFragment.this.getContext();
                 }
-            }, list);
+            }, mArticlesList);
             mNewsFeedRecyclerView.setAdapter(mArticlesRecyclerAdapter);
 
             //Set visibility and make animation
@@ -150,8 +156,15 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
             mNewsFeedRecyclerView.setVisibility(View.VISIBLE);
         } else {
             //Change with the updated list
-            mArticlesRecyclerAdapter.updateList(list);
+            mArticlesRecyclerAdapter.updateList(mArticlesList);
             mArticlesRecyclerAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //In validate the recycler view adapter
+        mArticlesRecyclerAdapter = null;
     }
 }
