@@ -1,11 +1,8 @@
 package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
-import android.content.Context;
-
 import java.util.List;
 
 import app.com.thetechnocafe.quicknewsbytes.Database.DataManager;
-import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.Models.SourceModel;
 import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
 
@@ -13,7 +10,7 @@ import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
  * Created by gurleensethi on 22/12/16.
  */
 
-public class HomeStreamActivityPresenter implements HomeStreamActivityContract.Presenter, DataManager.SourcesFetchListener, DataManager.NewsFetchListener {
+public class HomeStreamActivityPresenter implements HomeStreamActivityContract.Presenter, DataManager.SourcesFetchListener {
 
     private HomeStreamActivityContract.View mMainView;
 
@@ -24,7 +21,6 @@ public class HomeStreamActivityPresenter implements HomeStreamActivityContract.P
     @Override
     public void onStart() {
         DataManager.getInstance().getAllSources(mMainView.getContext(), this);
-        DataManager.getInstance().fetchArticlesForNewsFeed(mMainView.getContext(), this);
     }
 
     @Override
@@ -45,20 +41,5 @@ public class HomeStreamActivityPresenter implements HomeStreamActivityContract.P
     @Override
     public void onSourcesFetched(List<SourceModel> sourcesList) {
         mMainView.onSourcesFetched(sourcesList);
-    }
-
-    @Override
-    public void onOfflineNewsFetched(List<ArticleModel> list) {
-        mMainView.setUpArticleViewPager(list);
-    }
-
-    @Override
-    public void onNewsFetched(boolean isSuccessful, List<ArticleModel> articleList) {
-        mMainView.setUpArticleViewPager(articleList);
-    }
-
-    @Override
-    public Context getContext() {
-        return mMainView.getContext();
     }
 }

@@ -2,7 +2,7 @@ package app.com.thetechnocafe.quicknewsbytes.HomeStream;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
  * Created by gurleensethi on 31/12/16.
  */
 
-public class ArticlesFragmentPagerAdapter extends FragmentPagerAdapter {
+public class ArticlesFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<ArticleModel> mArticlesList;
 
@@ -30,5 +30,9 @@ public class ArticlesFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mArticlesList.size();
+    }
+
+    public void updateList(List<ArticleModel> articlesList) {
+        mArticlesList = articlesList;
     }
 }

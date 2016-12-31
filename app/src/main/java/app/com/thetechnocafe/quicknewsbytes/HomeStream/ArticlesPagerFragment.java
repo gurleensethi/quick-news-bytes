@@ -30,7 +30,9 @@ public class ArticlesPagerFragment extends Fragment {
     TextView mTitleTextView;
 
     private static final String ARGS_ARTICLE_MODEL = "articlemodel";
-    private static ArticleModel ARTICLE_MODEL;
+    private ArticleModel ARTICLE_MODEL;
+    private String ARTICLE_IMAGE_URL;
+    private String ARTICLE_TITLE;
 
     public static ArticlesPagerFragment getInstance(ArticleModel model) {
         //Create arguments for fragment
@@ -53,6 +55,10 @@ public class ArticlesPagerFragment extends Fragment {
 
         //Get the article model
         ARTICLE_MODEL = getArguments().getParcelable(ARGS_ARTICLE_MODEL);
+        if (ARTICLE_MODEL != null) {
+            ARTICLE_IMAGE_URL = ARTICLE_MODEL.getUrlToImage();
+            ARTICLE_TITLE = ARTICLE_MODEL.getTitle();
+        }
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,13 +75,11 @@ public class ArticlesPagerFragment extends Fragment {
     }
 
     private void bindData() {
+        Glide.with(getActivity())
+                .load(ARTICLE_IMAGE_URL)
+                .into(mArticleImageView);
 
-        if (ARTICLE_MODEL != null) {
-            Glide.with(getActivity())
-                    .load(ARTICLE_MODEL.getUrlToImage())
-                    .into(mArticleImageView);
+        mTitleTextView.setText(ARTICLE_TITLE);
 
-            mTitleTextView.setText(ARTICLE_MODEL.getTitle());
-        }
     }
 }

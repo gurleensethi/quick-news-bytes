@@ -50,7 +50,7 @@ public class DataManager {
             @Override
             public void onArticlesFetched(boolean isSuccessful, List<ArticleModel> articlesList) {
                 //Check if activity has not been destroyed
-                if(context != null) {
+                if (context != null) {
                     listener.onNewsFetched(isSuccessful, articlesList);
                 }
             }
@@ -60,21 +60,25 @@ public class DataManager {
     //Send request to fetch all the sources that are saved
     public void fetchArticlesForNewsFeed(final Context context, final NewsFetchListener listener) {
         //Send offline list
-        sendListOfArticles(context, listener);
+        //sendListOfArticles(context, listener);
 
         //Get all the saved sources
         List<SourceModel> mSourceList = RealmDatabase.getInstance(context).getSavedSources();
 
         //Iterate and get all sources
-        /*for (SourceModel model : mSourceList) {
+        for (int count = 0; count < mSourceList.size(); count++) {
+            SourceModel model = mSourceList.get(count);
+
+            boolean isLast = (count == mSourceList.size() - 1);
             new NetworkRequests().fetchNewsFromSource(context, new NetworkRequests.SourceNewsListener() {
                 @Override
                 public void onNewsFetched(boolean isSuccessful) {
-                    //listener.onNewsFetched(isSuccessful, RealmDatabase.getInstance(context).getSavedArticles());
+                    if (isSuccessful) {
+                        sendListOfArticles(context, listener);
+                    }
                 }
-            }, model.getID());
+            }, model.getID(), isLast);
         }
-        */
     }
 
     //Get all the saved sources

@@ -55,9 +55,6 @@ public class NetworkRequests {
                 try {
                     if (response.getString(Constants.STATUS).equals(Constants.STATUS_OK)) {
 
-                        //Remove already existing articles with source
-                        DataManager.getInstance().removeArticlesOfSource(context, sourceId);
-
                         //Get the articles array
                         JSONArray articlesArray = response.getJSONArray(Constants.ARTICLES);
 
@@ -100,7 +97,7 @@ public class NetworkRequests {
      * Fetch news for a single source,
      * Store directly to Realm Database
      */
-    public void fetchNewsFromSource(final Context context, final SourceNewsListener listener, final String sourceId) {
+    public void fetchNewsFromSource(final Context context, final SourceNewsListener listener, final String sourceId, final boolean isLast) {
         String completeURL = Constants.BASE_ARTICLES_URL + sourceId + Constants.NEWS_API_KEY;
 
         //Create JSON Request
@@ -133,13 +130,19 @@ public class NetworkRequests {
                             DataManager.getInstance().insertNewArticle(context, model);
                         }
 
-                        listener.onNewsFetched(true);
+                        if (isLast) {
+                            listener.onNewsFetched(true);
+                        }
                     } else {
-                        listener.onNewsFetched(false);
+                        if (isLast) {
+                            listener.onNewsFetched(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    listener.onNewsFetched(false);
+                    if (isLast) {
+                        listener.onNewsFetched(false);
+                    }
                 }
             }
         }, new Response.ErrorListener() {
