@@ -46,6 +46,8 @@ public class MainHomeStreamFragment extends Fragment implements MainHomStreamCon
 
         mPresenter = new MainHomeStreamPresenter(this);
 
+        Log.d(TAG, "View created");
+
         //Make view pager work with tab layout
         mTabLayout.setupWithViewPager(mSourcesViewPager);
 
@@ -55,7 +57,7 @@ public class MainHomeStreamFragment extends Fragment implements MainHomStreamCon
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.onStart(false);
+        mPresenter.onStart(isInstanceCreated);
         isInstanceCreated = true;
     }
 
@@ -63,11 +65,12 @@ public class MainHomeStreamFragment extends Fragment implements MainHomStreamCon
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDestroy();
+        isInstanceCreated = false;
     }
 
     @Override
     public void setUpViewPager(List<SourceModel> sourcesList) {
-        FragmentPagerAdapter fragmentPagerAdapter = new SourceFragmentPagerAdapter(getFragmentManager(), sourcesList);
+        FragmentPagerAdapter fragmentPagerAdapter = new SourceFragmentPagerAdapter(getChildFragmentManager(), sourcesList);
         mSourcesViewPager.setAdapter(fragmentPagerAdapter);
     }
 }
