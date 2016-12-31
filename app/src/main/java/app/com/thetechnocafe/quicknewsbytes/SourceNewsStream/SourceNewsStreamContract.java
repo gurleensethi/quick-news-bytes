@@ -12,7 +12,7 @@ import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 
 public class SourceNewsStreamContract {
     public interface Presenter {
-        void start();
+        void start(boolean isInstanceCreated);
 
         void refreshNews(String sourceID);
     }

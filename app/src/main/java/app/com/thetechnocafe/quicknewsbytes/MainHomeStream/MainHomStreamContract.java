@@ -18,7 +18,7 @@ public class MainHomStreamContract {
     }
 
     public interface Presenter {
-        void onStart();
+        void onStart(boolean isInstanceCreated);
 
         void onDestroy();
     }

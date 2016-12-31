@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class MainHomeStreamFragment extends Fragment implements MainHomStreamCon
 
     private static final String TAG = MainHomeStreamFragment.class.getSimpleName();
     private MainHomStreamContract.Presenter mPresenter;
+    private boolean isInstanceCreated = false;
 
     public static MainHomeStreamFragment getInstance() {
         return new MainHomeStreamFragment();
@@ -53,7 +55,8 @@ public class MainHomeStreamFragment extends Fragment implements MainHomStreamCon
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.onStart();
+        mPresenter.onStart(false);
+        isInstanceCreated = true;
     }
 
     @Override

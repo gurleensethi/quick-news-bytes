@@ -18,8 +18,10 @@ public class MainHomeStreamPresenter implements MainHomStreamContract.Presenter,
     }
 
     @Override
-    public void onStart() {
-        DataManager.getInstance().getAllUserSavedSource(mMainView.getContext(), this);
+    public void onStart(boolean isInstanceCreated) {
+        if (!isInstanceCreated) {
+            DataManager.getInstance().getAllUserSavedSource(mMainView.getContext(), this);
+        }
     }
 
     @Override

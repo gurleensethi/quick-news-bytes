@@ -7,7 +7,6 @@ import java.util.List;
 import app.com.thetechnocafe.quicknewsbytes.Database.DataManager;
 import app.com.thetechnocafe.quicknewsbytes.Models.ArticleModel;
 import app.com.thetechnocafe.quicknewsbytes.R;
-import app.com.thetechnocafe.quicknewsbytes.Utils.Constants;
 
 /**
  * Created by gurleensethi on 18/12/16.
@@ -22,17 +21,13 @@ public class SourceNewsStreamPresenter implements SourceNewsStreamContract.Prese
     }
 
     @Override
-    public void start() {
+    public void start(boolean isInstanceCreated) {
 
     }
 
     @Override
     public void refreshNews(String sourceID) {
-        if (sourceID.equals(Constants.MAIN_HOME_STREAM)) {
-            DataManager.getInstance().fetchArticlesForNewsFeed(mHomeStreamView.getViewContext(), this);
-        } else {
-            DataManager.getInstance().fetchLatestNewsBySource(mHomeStreamView.getViewContext(), sourceID, this);
-        }
+        DataManager.getInstance().fetchLatestNewsBySource(mHomeStreamView.getViewContext(), sourceID, this);
         mHomeStreamView.startRefreshing();
     }
 

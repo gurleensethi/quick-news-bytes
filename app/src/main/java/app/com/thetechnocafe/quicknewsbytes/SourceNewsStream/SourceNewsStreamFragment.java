@@ -42,7 +42,8 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
     private SourceNewsStreamContract.Presenter mPresenter;
     private ArticlesRecyclerAdapter mArticlesRecyclerAdapter;
     private static final String ARG_SOURCE_ID = "sourceid";
-    private static List<ArticleModel> mArticlesList;
+    private List<ArticleModel> mArticlesList;
+    private boolean isInstanceCreated = false;
 
     public static Fragment getInstance(String sourceID) {
         //Create arguments
@@ -59,9 +60,16 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
-        mPresenter.refreshNews(getArguments().getString(ARG_SOURCE_ID));
-        Log.d(TAG + "/" + getArguments().getString(ARG_SOURCE_ID), "Resuming fragment");
+        mPresenter.start(isInstanceCreated);
+
+        if (!isInstanceCreated) {
+            mPresenter.refreshNews(getArguments().getString(ARG_SOURCE_ID));
+            Log.d(TAG + "/" + getArguments().getString(ARG_SOURCE_ID), "Resuming fragment");
+        } else {
+            setUpOrRefreshRecyclerView(mArticlesList);
+        }
+
+        isInstanceCreated = true;
     }
 
     @Nullable
@@ -166,5 +174,11 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
         super.onPause();
         //In validate the recycler view adapter
         mArticlesRecyclerAdapter = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isInstanceCreated = false;
     }
 }

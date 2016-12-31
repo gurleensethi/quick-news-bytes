@@ -49,7 +49,10 @@ public class DataManager {
         new NetworkRequests().fetchArticlesFromSingleSource(context, new NetworkRequests.SingleSourceFetchListener() {
             @Override
             public void onArticlesFetched(boolean isSuccessful, List<ArticleModel> articlesList) {
-                listener.onNewsFetched(isSuccessful, articlesList);
+                //Check if activity has not been destroyed
+                if(context != null) {
+                    listener.onNewsFetched(isSuccessful, articlesList);
+                }
             }
         }, sourceID);
     }
