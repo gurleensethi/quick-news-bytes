@@ -11,6 +11,8 @@ public class InitialSetUpContract {
         Context getAppContext();
 
         void setUpViewPager();
+
+        void startNewsFeed();
     }
 
     public interface Presenter {
