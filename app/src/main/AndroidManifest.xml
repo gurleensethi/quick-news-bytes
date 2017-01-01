@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".CustomizeNewsFeed.CustomizeNewsFeedActivity">
         </activity>
+        <activity android:name=".InitialSetUp.InitialSetUpActivity">
+        </activity>
     </application>
 
 </manifest>
