@@ -9,6 +9,8 @@ import android.content.Context;
 public class InitialSetUpContract {
     public interface View {
         Context getAppContext();
+
+        void setUpViewPager();
     }
 
     public interface Presenter {

@@ -14,6 +14,6 @@ public class InitialSetUpPresenter implements InitialSetUpContract.Presenter {
 
     @Override
     public void onStart() {
-
+        mMainView.setUpViewPager();
     }
 }

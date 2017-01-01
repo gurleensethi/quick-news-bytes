@@ -8,6 +8,10 @@
     <string name="search">Search</string>
     <string name="save">Save</string>
     <string name="customize_news_feed">Customize News Feed</string>
+    <string name="welcome">Welcome</string>
+    <string name="next">Next</string>
+    <string name="proceed">Proceed</string>
+    <string name="welcome_text">With QuickNewsBytes enjoy rich news from 70+ quality sources. Click below to customize your news feed</string>
     <plurals name="hoursAgo">
         <item quantity="one">%d hour ago</item>
         <item quantity="other">%d hours ago</item>
