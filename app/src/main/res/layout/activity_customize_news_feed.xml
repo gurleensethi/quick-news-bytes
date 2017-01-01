@@ -31,10 +31,12 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="8dp"
             android:hint="@string/search"
-            android:inputType="textShortMessage"
             android:imeOptions="actionDone"
+            android:inputType="textShortMessage"
             android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
             android:paddingTop="8dp"/>
 
     </android.support.design.widget.AppBarLayout>
@@ -55,17 +57,5 @@
         </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:src="@drawable/ic_tick"
-        app:backgroundTint="@color/md_green_600"
-        app:fabSize="normal"
-        app:layout_anchor="@id/linear_layout"
-        app:layout_anchorGravity="bottom|right"/>
 
 </android.support.design.widget.CoordinatorLayout>

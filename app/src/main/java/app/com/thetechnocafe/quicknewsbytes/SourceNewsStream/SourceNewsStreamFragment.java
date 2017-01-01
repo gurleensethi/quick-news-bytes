@@ -140,7 +140,6 @@ public class SourceNewsStreamFragment extends Fragment implements SourceNewsStre
 
     private void setUpOrRefreshRecyclerView(List<ArticleModel> list) {
         mArticlesList = list;
-        Log.d(TAG, "List size : " + mArticlesList.size());
         if (mArticlesRecyclerAdapter == null) {
             mArticlesRecyclerAdapter = new ArticlesRecyclerAdapter(new ArticlesRecyclerAdapter.ArticleEventListener() {
                 @Override
