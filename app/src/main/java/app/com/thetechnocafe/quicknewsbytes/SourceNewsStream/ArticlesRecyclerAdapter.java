@@ -115,6 +115,9 @@ public class ArticlesRecyclerAdapter extends RecyclerView.Adapter<ArticlesRecycl
 
     @Override
     public int getItemCount() {
+        if (mList == null) {
+            return 0;
+        }
         return mList.size();
     }
 
