@@ -35,11 +35,11 @@ public class SharedPreferencesUtils {
      * Change the value of first run (boolean)
      */
     public boolean getFirstRunValue() {
-        return mSharedPreferences.getBoolean(SP_FIRST_RUN, false);
+        return mSharedPreferences.getBoolean(SP_FIRST_RUN, true);
     }
 
     public void setFirstRunValue(boolean value) {
-        //Get shared preferences editor and change vlaue
+        //Get shared preferences editor and change value
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean(SP_FIRST_RUN, value);
         editor.commit();

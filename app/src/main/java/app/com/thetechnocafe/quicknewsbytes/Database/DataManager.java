@@ -164,4 +164,14 @@ public class DataManager {
         listener.onOfflineNewsFetched(articlesList);
     }
 
+    //Fetch all sources from network
+    public void fetchSourcesFromNetwork(final Context context, final SourcesFetchListener listener) {
+        new NetworkRequests().fetchSources(context, new NetworkRequests.SourcesFetcherListener() {
+            @Override
+            public void onSourcesFetched(boolean isSuccessful) {
+                listener.onSourcesFetched(RealmDatabase.getInstance(context).getAllSources());
+            }
+        });
+    }
+
 }

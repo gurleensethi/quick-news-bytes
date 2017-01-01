@@ -12,6 +12,11 @@
     <string name="next">Next</string>
     <string name="proceed">Proceed</string>
     <string name="welcome_text">With QuickNewsBytes enjoy rich news from 70+ quality sources. Click below to customize your news feed</string>
+    <string name="select_minimum_sources">Customize your news feed by selecting sources of your interest. Select a minimum of 3 sources.</string>
+    <string name="source_fetch_error">Unable to fetch sources, please check your internet connection.</string>
+    <string name="retry">Retry</string>
+    <string name="retrying">Retrying</string>
+    <string name="minimum_sources">Select at least 3 sources</string>
     <plurals name="hoursAgo">
         <item quantity="one">%d hour ago</item>
         <item quantity="other">%d hours ago</item>

@@ -33,8 +33,6 @@ public class NetworkRequests {
 
     public interface SourcesFetcherListener {
         void onSourcesFetched(boolean isSuccessful);
-
-        Context getContext();
     }
 
     public interface SingleSourceFetchListener {
@@ -182,14 +180,17 @@ public class NetworkRequests {
                             DataManager.getInstance().insertNewSource(context, source);
                         }
                     }
-                } catch (JSONException e) {
 
+                    listener.onSourcesFetched(true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    listener.onSourcesFetched(false);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                listener.onSourcesFetched(false);
             }
         });
 
