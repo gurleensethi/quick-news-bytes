@@ -1,6 +1,7 @@
 package app.com.thetechnocafe.quicknewsbytes.SourceNewsStream;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import app.com.thetechnocafe.quicknewsbytes.R;
 
 public class SourceNewsStreamPresenter implements SourceNewsStreamContract.Presenter, DataManager.NewsFetchListener {
 
+    private static final String TAG = SourceNewsStreamPresenter.class.getSimpleName();
     private SourceNewsStreamContract.View mHomeStreamView;
 
     public SourceNewsStreamPresenter(SourceNewsStreamContract.View view) {
@@ -38,6 +40,12 @@ public class SourceNewsStreamPresenter implements SourceNewsStreamContract.Prese
 
     @Override
     public void onNewsFetched(boolean isSuccessful, List<ArticleModel> articleList) {
+        //Check if context is null
+        if (mHomeStreamView.getViewContext() == null) {
+            Log.d(TAG, "Context was null, cancelling operation.");
+            return;
+        }
+
         if (isSuccessful) {
             mHomeStreamView.displayNewsList(articleList);
         } else {
